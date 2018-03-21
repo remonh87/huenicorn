@@ -14,8 +14,6 @@ before_script:
   - ./flutter/bin/flutter doctor
 script:
   - ./flutter/bin/flutter test
-  - ./flutter/bin/flutter build aot
-  - ./flutter/bin/flutter build analyze  
 cache:
   directories:
     - $HOME/.pub-cache
