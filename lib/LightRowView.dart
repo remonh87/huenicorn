@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+
 class LightRowView extends StatelessWidget {
 
   String title;
@@ -14,14 +15,34 @@ class LightRowView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Padding(
-        padding: new EdgeInsets.all(8.0),
-        child: new Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            new Text(title),
-            new CupertinoSwitch(value: isOn, onChanged: null)
-          ],
-        )
+      padding: const EdgeInsets.only(
+          left: 5.0, right: 5.0, top: 1.0, bottom: 1.0),
+      child: new Card(
+          child: new Column(
+              children: <Widget>[
+                new Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    new Row(
+                      children: <Widget>[
+                        new Icon(Icons.lightbulb_outline, color: Colors.black,),
+                        new Padding(
+                          padding: const EdgeInsets.only(left: 5.0),
+                          child: new Text(title),
+                        ),
+                      ],
+                    ),
+                    new CupertinoSwitch(value: isOn, onChanged: null)
+                  ],
+                ),
+                new Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[ new CupertinoSlider(onChanged: (double value) {}, value: 0.5, min: 0.0, max:1.0)
+                  ],
+                )
+              ]
+          )
+      ),
     );
   }
 }
