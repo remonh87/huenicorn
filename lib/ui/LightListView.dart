@@ -17,7 +17,7 @@ class _LightListViewState extends State<LightListView> {
 
   final BridgeState _bridgeState;
 
-  var List<Light> _lights = [];
+  List<Light> _lights = [];
 
   _LightListViewState(this._bridgeState) {
     _bridgeState.addListener(_applyBridgeState);
