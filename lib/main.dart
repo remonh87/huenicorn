@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:huenicorn/LightListView.dart';
-import 'package:huenicorn/HuenicornSettings.dart';
+import 'package:huenicorn/BridgeStateProvider.dart';
+import 'package:huenicorn/Settings.dart';
+import 'package:huenicorn/ui/HuenicornSettings.dart';
+import 'package:huenicorn/ui/LightListView.dart';
 
 void main() => runApp(new MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -25,6 +26,8 @@ class HuenicornHome extends StatefulWidget {
 
 class _HuenicornHomeState extends State<HuenicornHome> {
 
+  final _bridgeStateProvider = new BridgeStateProvider(new Settings());
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -41,7 +44,7 @@ class _HuenicornHomeState extends State<HuenicornHome> {
         ),
         title: new Text('Home'),
       ),
-      body: new LightListView()
+      body: new LightListView(_bridgeStateProvider.bridgeState)
     );
   }
 }
