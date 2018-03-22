@@ -13,8 +13,8 @@ class HuenicornSettingsState extends State<HuenicornSettings>{
   Widget build(BuildContext context) {
     final double myTextSize = 30.0;
     final double myIconSize = 40.0;
-    final TextStyle myTextStyle =
-    new TextStyle(color: Colors.grey, fontSize: myTextSize);
+    final TextStyle myTextStyle = new TextStyle(color: Colors.grey, fontSize: myTextSize);
+
     return new Scaffold(
       appBar: new AppBar(
         leading: new IconButton(
@@ -36,8 +36,8 @@ class HuenicornSettingsState extends State<HuenicornSettings>{
                       "Connect",
                       style: myTextStyle,
                     ),
-                    icon: new Icon(Icons.computer,
-                        size: myIconSize, color: Colors.red)),
+                    icon: new Icon(Icons.signal_wifi_4_bar,
+                        size: myIconSize, color: Colors.blue)),
 
                 new CardSetting(
                     title: new Text(
