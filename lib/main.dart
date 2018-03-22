@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:huenicorn/LightListView.dart';
-import 'HuenicornSettings.dart';
+import 'package:huenicorn/HuenicornSettings.dart';
 
 void main() => runApp(new MyApp());
 

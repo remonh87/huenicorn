@@ -2,16 +2,14 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:huenicorn/hue/light.dart';
+import 'package:huenicorn/network/light_serializer.dart';
 
-import 'package:huenicorn/light.dart';
-import 'package:huenicorn/light_serializer.dart';
-
-
-class Bridge {
+class BridgeClient {
   String bridgeAddress;
   String token;
 
-  Bridge(this.bridgeAddress, [this.token = '0']);
+  BridgeClient(this.bridgeAddress, [this.token = '0']);
 
   Future<List<Light>> getLights() async {
     var url = 'http://' + bridgeAddress + '/api/' + token + '/lights';

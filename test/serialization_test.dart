@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:huenicorn/light_serializer.dart';
+import 'package:huenicorn/network/light_serializer.dart';
 
 String lightOne = '''"1": {
         "state": {
@@ -46,8 +46,8 @@ String lightOne = '''"1": {
 
 String lightTwo = '''"2": {
         "state": {
-            "on": true,
-            "bri": 254,
+            "on": false,
+            "bri": 127,
             "hue": 33665,
             "sat": 143,
             "effect": "none",
@@ -109,5 +109,17 @@ void main() {
   test('Light name of the second light is filled in', () {
     var s = new LightSerializer();
     expect(s.createLights(dualLightResponse)[1].name, 'Hue color lamp 2');
+  });
+
+  test('Lights are switched on and off', () {
+    var lights = (new LightSerializer()).createLights(dualLightResponse);
+    expect(lights[0].isOn, true);
+    expect(lights[1].isOn, false);
+  });
+
+  test('Lights have correct brightness', () {
+    var lights = (new LightSerializer()).createLights(dualLightResponse);
+    expect(lights[0].brightness, 254);
+    expect(lights[1].brightness, 127);
   });
 }
