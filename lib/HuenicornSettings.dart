@@ -41,26 +41,10 @@ class HuenicornSettingsState extends State<HuenicornSettings>{
 
                 new CardSetting(
                     title: new Text(
-                      "Lights",
+                      "App Theme",
                       style: myTextStyle,
                     ),
-                    icon: new Icon(Icons.lightbulb_outline,
-                        size: myIconSize, color: Colors.amber)),
-
-                new CardSetting(
-                    title: new Text(
-                      "Color",
-                      style: myTextStyle,
-                    ),
-                    icon: new Icon(Icons.color_lens,
-                        size: myIconSize, color: Colors.blue)),
-
-                new CardSetting(
-                    title: new Text(
-                      "Apply",
-                      style: myTextStyle,
-                    ),
-                    icon: new Icon(Icons.done,
+                    icon: new Icon(Icons.theaters,
                         size: myIconSize, color: Colors.green)),
               ],
             ),
