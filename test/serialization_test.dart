@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:huenicorn/light_serializer.dart';
+import 'package:huenicorn/network/light_serializer.dart';
 
 String lightOne = '''"1": {
         "state": {

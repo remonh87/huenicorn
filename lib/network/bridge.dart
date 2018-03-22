@@ -2,10 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-
-import 'package:huenicorn/light.dart';
-import 'package:huenicorn/light_serializer.dart';
-
+import 'package:huenicorn/network/light.dart';
+import 'package:huenicorn/network/light_serializer.dart';
 
 class Bridge {
   String bridgeAddress;

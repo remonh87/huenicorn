@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:huenicorn/light.dart';
+import 'package:huenicorn/network/light.dart';
 
 class LightSerializer {
   List<Light> createLights(String response) {
