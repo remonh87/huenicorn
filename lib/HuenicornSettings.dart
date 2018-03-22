@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:huenicorn/CardSetting.dart';
 
 class HuenicornSettings extends StatefulWidget {
   HuenicornSettings({Key key}) : super(key: key);
@@ -51,27 +52,5 @@ class HuenicornSettingsState extends State<HuenicornSettings>{
           ),
         ),
       );
-  }
-}
-
-class CardSetting extends StatelessWidget {
-  final Widget icon;
-  final Widget title;
-  
-  CardSetting({this.title, this.icon});
-
-  @override
-  Widget build(BuildContext context) {
-    return new Container(
-      padding: const EdgeInsets.only(bottom: 1.0),
-      child: new Card(
-        child: new Container(
-          padding: const EdgeInsets.all(20.0),
-          child: new Column(
-            children: <Widget>[this.title, this.icon],
-          ),
-        ),
-      ),
-    );
   }
 }
