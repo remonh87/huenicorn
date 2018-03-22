@@ -11,6 +11,10 @@ class HuenicornSettingsState extends State<HuenicornSettings>{
 
   @override
   Widget build(BuildContext context) {
+    final double myTextSize = 30.0;
+    final double myIconSize = 40.0;
+    final TextStyle myTextStyle = new TextStyle(color: Colors.grey, fontSize: myTextSize);
+
     return new Scaffold(
       appBar: new AppBar(
         leading: new IconButton(
@@ -20,6 +24,53 @@ class HuenicornSettingsState extends State<HuenicornSettings>{
           },
         ),
         title: new Text('Settings'),
+      ),
+        body: new Container(
+          padding: const EdgeInsets.only(bottom: 2.0),
+          child: new Center(
+            child: new Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                new CardSetting(
+                    title: new Text(
+                      "Connect",
+                      style: myTextStyle,
+                    ),
+                    icon: new Icon(Icons.signal_wifi_4_bar,
+                        size: myIconSize, color: Colors.blue)),
+
+                new CardSetting(
+                    title: new Text(
+                      "App Theme",
+                      style: myTextStyle,
+                    ),
+                    icon: new Icon(Icons.theaters,
+                        size: myIconSize, color: Colors.green)),
+              ],
+            ),
+          ),
+        ),
+      );
+  }
+}
+
+class CardSetting extends StatelessWidget {
+  final Widget icon;
+  final Widget title;
+  
+  CardSetting({this.title, this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return new Container(
+      padding: const EdgeInsets.only(bottom: 1.0),
+      child: new Card(
+        child: new Container(
+          padding: const EdgeInsets.all(20.0),
+          child: new Column(
+            children: <Widget>[this.title, this.icon],
+          ),
+        ),
       ),
     );
   }
