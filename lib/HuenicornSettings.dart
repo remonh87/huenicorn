@@ -21,23 +21,6 @@ class HuenicornSettingsState extends State<HuenicornSettings>{
         ),
         title: new Text('Settings'),
       ),
-      body: new Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          new TextField(
-            controller: new TextEditingController(),
-            decoration: new InputDecoration(
-              hintText: 'Set IP address of your bridge: xxx.xxx.xxx.xxx',
-            ),
-          ),
-          new RaisedButton(
-            onPressed: () {
-              // do nothing
-            },
-            child: new Text('Set'),
-          ),
-        ],
-      ),
     );
   }
 }

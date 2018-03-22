@@ -18,8 +18,6 @@ class MyApp extends StatelessWidget {
 class HuenicornHome extends StatefulWidget {
   HuenicornHome({Key key}) : super(key: key);
 
-  final String title;
-
   @override
   _HuenicornHomeState createState() => new _HuenicornHomeState();
 }
