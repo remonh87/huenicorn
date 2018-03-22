@@ -26,5 +26,7 @@ _getLights() async {
   } catch (exception) {
     result = 'Failed getting IP address ${exception.toString()}';
   }
+
+  return result;
 }
 
