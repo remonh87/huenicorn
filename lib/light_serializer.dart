@@ -5,6 +5,6 @@ import 'package:huenicorn/light.dart';
 class LightSerializer {
   List<Light> createLights(String response) {
     var json = JSON.decode(response);
-    return json.keys.map((id) => new Light(json[id]['name'])).toList();
+    return json.keys.map((id) => new Light(json[id]['name'], json[id]['state']['on'])).toList();
   }
 }
