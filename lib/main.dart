@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'LightColorPicker.dart';
+import 'HueLightColorPicker.dart';
 
 void main() => runApp(new MyApp());
 
@@ -62,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
     void _openAddEntryDialog() {
       Navigator.of(context).push(new MaterialPageRoute<Null>(
           builder: (BuildContext context) {
-            return new LightColorPicker(1);
+            return new HueLightColorPicker(1);
           },
           fullscreenDialog: true
       ));
