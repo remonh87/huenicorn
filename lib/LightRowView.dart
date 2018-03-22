@@ -2,6 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 
+class LightSwitch extends StatefulWidget {
+  @override
+  _LightSwitchState createState() => new _LightSwitchState();
+}
+
+class _LightSwitchState extends State<LightSwitch> {
+
+  bool _isOn = false;
+
+  void _toggleLightSwitch() {
+    setState(() {
+      if (_isOn) {
+        _isOn = false;
+      }
+      else {
+        _isOn = true;
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new CupertinoSwitch(value: _isOn, onChanged: _toggleLightSwitch);
+  }
+}
+
 class LightRowView extends StatelessWidget {
 
   String title;
