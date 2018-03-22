@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:huenicorn/network/light.dart';
+import 'package:huenicorn/hue/light.dart';
 import 'package:huenicorn/network/light_serializer.dart';
 
 class Bridge {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:huenicorn/LightRowView.dart';
-import 'package:huenicorn/network/light.dart';
+import 'package:huenicorn/hue/light.dart' show Light;
 
 class LightListView extends StatefulWidget {
   @override
