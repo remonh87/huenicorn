@@ -33,6 +33,8 @@ flutter:
   assets:
     - assets/color.png
     - assets/bulbs_black.png
+    - assets/devices_bridges.png
+    - assets/uicontrols_scenes.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

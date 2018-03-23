@@ -1,8 +1,9 @@
 class Light {
   String name;
   bool isOn;
-  int brightness = 0;
-  int hue = 0;
+  double hue;
+  double saturation;
+  double brightness;
 
-  Light(this.name, [this.isOn = false]);
+  Light(this.name, this.isOn, this.hue, this.saturation, this.brightness);
 }
