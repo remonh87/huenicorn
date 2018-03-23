@@ -83,7 +83,6 @@ class LoginPageState extends State<IpAddress>
                           } else {
                             Settings.getInstance().setBridgeAddress(
                                 _controller.text);
-                            final _bridgeStateProvider =
                             new BridgeStateProvider(Settings.getInstance());
                             Navigator.pop(context);
                             Navigator.push(
