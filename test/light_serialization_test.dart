@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:huenicorn/network/light_serializer.dart';
+import 'package:huenicorn/network/light_deserializer.dart';
 
 String lightOne = '''"1": {
         "state": {
@@ -92,40 +92,40 @@ String dualLightResponse = '{' + lightOne + ', ' + lightTwo + '}';
 
 void main() {
   test('Empty response produces empty list of lights', () {
-    var s = new LightSerializer();
+    var s = new LightDeserializer();
     expect(s.createLights("{}").length, 0);
   });
 
   test('Single light configuration produces list with single light', () {
-    var s = new LightSerializer();
+    var s = new LightDeserializer();
     expect(s.createLights(singleLightResponse).length, 1);
   });
 
   test('Light name is filled in', () {
-    var s = new LightSerializer();
+    var s = new LightDeserializer();
     expect(s.createLights(singleLightResponse)[0].name, 'Hue color lamp 1');
   });
 
   test('Light name of the second light is filled in', () {
-    var s = new LightSerializer();
+    var s = new LightDeserializer();
     expect(s.createLights(dualLightResponse)[1].name, 'Hue color lamp 2');
   });
 
   test('Lights are switched on and off', () {
-    var lights = (new LightSerializer()).createLights(dualLightResponse);
+    var lights = (new LightDeserializer()).createLights(dualLightResponse);
     expect(lights[0].isOn, true);
     expect(lights[1].isOn, false);
   });
 
   test('Lights have correct brightness', () {
-    var lights = (new LightSerializer()).createLights(dualLightResponse);
-    expect(lights[0].brightness, 254);
-    expect(lights[1].brightness, 127);
+    var lights = (new LightDeserializer()).createLights(dualLightResponse);
+    expect(lights[0].brightness * 255, 254);
+    expect(lights[1].brightness * 255, 127);
   });
 
   test('Lights have correct color', () {
-    var lights = (new LightSerializer()).createLights(dualLightResponse);
-    expect(lights[0].hue, 33665);
-    expect(lights[1].hue, 1);
+    var lights = (new LightDeserializer()).createLights(dualLightResponse);
+    expect(lights[0].hue * 65535, 33665);
+    expect(lights[1].hue * 65535, 1);
   });  
 }

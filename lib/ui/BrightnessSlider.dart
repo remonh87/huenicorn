@@ -2,24 +2,31 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class BrightnessSlider extends StatefulWidget {
+
+  final double _brightness;
+
+  BrightnessSlider(this._brightness);
+
   @override
-  _BrightnessSliderState createState() => new _BrightnessSliderState();
+  _BrightnessSliderState createState() => new _BrightnessSliderState(_brightness);
 }
 
 class _BrightnessSliderState extends State<BrightnessSlider> {
 
-  double _brightnessLevel = 100.0;
+  double _brightness = 1.0;
+
+  _BrightnessSliderState(this._brightness);
 
   @override
   Widget build(BuildContext context) {
     return new CupertinoSlider(
-      value: _brightnessLevel,
+      value: _brightness,
       min: 0.0,
-      max: 100.0,
-      divisions: 100,
+      max: 1.0,
+      divisions: 255,
       onChanged: (double newValue) {
         setState(() {
-          _brightnessLevel = newValue;
+          _brightness = newValue;
         });
       }
     );
