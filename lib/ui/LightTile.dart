@@ -6,13 +6,10 @@ import 'HuenicornSettings.dart';
 
 class LightTile extends StatelessWidget{
 
-  String _title;
-  bool _isOn;
+  final String _title;
+  final bool _isOn;
 
-  LightTile(String title, bool isOn) {
-    _title = title;
-    _isOn = isOn;
-  }
+  LightTile(this._title, this._isOn);
 
   @override
   Widget build(BuildContext context) {
