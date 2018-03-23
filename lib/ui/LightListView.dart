@@ -42,7 +42,7 @@ class _LightListViewState extends State<LightListView> {
       itemCount: _lights.length,
       itemBuilder: (BuildContext context, int index) {
         final light = _lights[index];
-        return new LightRowView(light);
+        return new LightRowView(_bridgeState, light);
       }
     );
   }
