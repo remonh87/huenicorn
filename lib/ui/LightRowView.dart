@@ -6,13 +6,10 @@ import 'BrightnessSlider.dart';
 
 class LightRowView extends StatelessWidget {
 
-  String _title;
-  bool _isOn;
+  final String _title;
+  final bool _isOn;
 
-  LightRowView(String title, bool isOn) {
-    _title = title;
-    _isOn = isOn;
-  }
+  LightRowView(this._title, this._isOn);
 
   @override
   Widget build(BuildContext context) {
