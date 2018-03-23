@@ -7,6 +7,7 @@ class LightSerializer {
     var json = JSON.decode(response);
     return json.keys.map((id) {
       var light = new Light(json[id]['name']);
+      light.id = id;
       light.isOn = json[id]['state']['on'];
       light.brightness = json[id]['state']['bri'];
       light.hue = json[id]['state']['hue'];

@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:http/http.dart' as http;
+
 import 'package:huenicorn/hue/light.dart';
 import 'package:huenicorn/network/light_serializer.dart';
 
@@ -18,5 +20,11 @@ class BridgeClient {
     var response = await request.close();
     var json = await response.transform(UTF8.decoder).join();
     return (new LightSerializer()).createLights(json);
+  }
+
+  setLight(Light light) async {
+    var url = 'http://' + bridgeAddress + '/api/' + token + '/lights/' + light.id + '/state';
+    var body = { "bri": light.brightness, "hue": light.hue };
+    await http.put(url, body: JSON.encode(body));
   }
 }
