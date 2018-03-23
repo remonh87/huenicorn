@@ -10,22 +10,11 @@ class ipAddress extends StatefulWidget {
 
 class LoginPageState extends State<ipAddress>
     with SingleTickerProviderStateMixin {
-  Animation<double> _iconAnimation;
-  AnimationController _iconAnimationController;
-
   final TextEditingController _controller = new TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _iconAnimationController = new AnimationController(
-        vsync: this, duration: new Duration(milliseconds: 500));
-    _iconAnimation = new CurvedAnimation(
-      parent: _iconAnimationController,
-      curve: Curves.bounceOut,
-    );
-    _iconAnimation.addListener(() => this.setState(() {}));
-    _iconAnimationController.forward();
   }
 
   @override
@@ -87,7 +76,8 @@ class LoginPageState extends State<ipAddress>
                             child: new AlertDialog(
                               title: new Text('What you typed'),
                               content: new Text(_controller.text),
-                            ),
+                            )
+                            ,
                           );
                         },
 
