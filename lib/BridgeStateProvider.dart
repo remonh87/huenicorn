@@ -9,7 +9,9 @@ class BridgeStateProvider {
   BridgeState get bridgeState => _bridgeState;
 
   BridgeStateProvider(Settings settings) {
-    final bridgeClient = new BridgeClient(settings.bridgeAddress, settings.bridgeToken);
+    final bridgeClient = new BridgeClient(
+        Settings.getInstance().getBridgeAddress(),
+        Settings.getInstance().getWhiteList());
     _bridgeState = new BridgeState(bridgeClient);
   }
 }

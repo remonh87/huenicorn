@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:huenicorn/BridgeStateProvider.dart';
+import 'package:huenicorn/Settings.dart';
+import 'package:huenicorn/ui/LightListView.dart';
 
 
-class ipAddress extends StatefulWidget {
+class IpAddress extends StatefulWidget {
   @override
   State createState() => new LoginPageState();
 }
 
 
-class LoginPageState extends State<ipAddress>
+class LoginPageState extends State<IpAddress>
     with SingleTickerProviderStateMixin {
   final TextEditingController _controller = new TextEditingController();
 
@@ -24,7 +27,11 @@ class LoginPageState extends State<ipAddress>
         leading: new IconButton(
           icon: new Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context);
+            if (Settings.getInstance().getBridgeAddress() == "") {
+              showEnterIpDialog();
+            } else {
+              Navigator.pop(context);
+            }
           },
         ),
         title: new Text('IP Address'),
@@ -71,14 +78,22 @@ class LoginPageState extends State<ipAddress>
                         textColor: Colors.white,
                         child: new Icon(FontAwesomeIcons.signInAlt),
                         onPressed: () {
-                          showDialog(
-                            context: context,
-                            child: new AlertDialog(
-                              title: new Text('What you typed'),
-                              content: new Text(_controller.text),
-                            )
-                            ,
-                          );
+                          if (_controller.text.trim() == "") {
+                            showEnterIpDialog();
+                          } else {
+                            Settings.getInstance().setBridgeAddress(
+                                _controller.text);
+                            final _bridgeStateProvider =
+                            new BridgeStateProvider(Settings.getInstance());
+                            Navigator.pop(context);
+                            Navigator.push(
+                              context,
+                              new MaterialPageRoute(
+                                  builder: (context) =>
+                                  new LightListView(
+                                      _bridgeStateProvider.bridgeState)),
+                            );
+                          }
                         },
 
                       )
@@ -99,5 +114,13 @@ class LoginPageState extends State<ipAddress>
         ),
       ]),
     );
+  }
+
+  void showEnterIpDialog() {
+    showDialog(
+        context: context,
+        child: new AlertDialog(
+          title: new Text('Please type IP Address'),
+        ));
   }
 }

@@ -40,7 +40,7 @@ class HuenicornSettingsState extends State<HuenicornSettings> {
                   Navigator.push(
                     context,
                     new MaterialPageRoute(
-                        builder: (context) => new ipAddress()),
+                        builder: (context) => new IpAddress()),
                   );
                 }, child: new CardSetting(
                   title: new Text(
