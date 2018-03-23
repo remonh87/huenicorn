@@ -40,20 +40,25 @@ class _HuenicornHomeState extends State<HuenicornHome> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        appBar: new AppBar(
-          leading: new IconButton(
-            icon: new Icon(Icons.settings),
-            onPressed: () {
-              Navigator.push(
-                context,
-                new MaterialPageRoute(
-                    builder: (context) => new HuenicornSettings()),
-              );
-            },
-          ),
-          title: new Text('Home'),
+      appBar: new AppBar(
+        backgroundColor: Colors.grey[850],
+        leading: new IconButton(
+          icon: new Icon(Icons.settings),
+          onPressed: () {
+            Navigator.push(
+              context,
+              new MaterialPageRoute(
+                  builder: (context) => new HuenicornSettings()),
+            );
+          },
         ),
-        body: new LightListView(_bridgeStateProvider.bridgeState)
+        title: new Text('Home'),
+      ),
+      body:
+      new Container(
+        color: Colors.grey[900],
+          child: new LightListView(_bridgeStateProvider.bridgeState)
+    )
     );
   }
 }

@@ -13,13 +13,13 @@ class HuenicornSettingsState extends State<HuenicornSettings> {
 
   @override
   Widget build(BuildContext context) {
-    final double myTextSize = 30.0;
-    final double myIconSize = 40.0;
+    final double myIconSize = 30.0;
     final TextStyle myTextStyle = new TextStyle(
-        color: Colors.grey, fontSize: myTextSize);
+        color: Colors.white);
 
     return new Scaffold(
       appBar: new AppBar(
+        backgroundColor: Colors.grey[850],
         leading: new IconButton(
           icon: new Icon(Icons.arrow_back),
           onPressed: () {
@@ -29,7 +29,8 @@ class HuenicornSettingsState extends State<HuenicornSettings> {
         title: new Text('Settings'),
       ),
       body: new Container(
-        padding: const EdgeInsets.only(bottom: 2.0),
+        color: Colors.grey[900],
+        padding: const EdgeInsets.only(top: 2.0, left: 10.0, right: 10.0),
         child: new Center(
           child: new Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -43,26 +44,32 @@ class HuenicornSettingsState extends State<HuenicornSettings> {
                         builder: (context) => new IpAddress()),
                   );
                 }, child: new CardSetting(
+                  icon: new ImageIcon(
+                      new AssetImage("assets/devices_bridges.png"),
+                      size: myIconSize, color: Colors.white),
                   title: new Text(
-                    "Connects",
+                    "Connect",
+                    textScaleFactor: 1.2,
                     style: myTextStyle,
-                  ),
-                  icon: new Icon(Icons.signal_wifi_4_bar,
-                      size: myIconSize, color: Colors.blue)),
+                  )),
               ),
 
 
               new CardSetting(
+                  icon: new ImageIcon(
+                      new AssetImage("assets/uicontrols_scenes.png"),
+                      size: myIconSize, color: Colors.white),
                   title: new Text(
                     "App Theme",
+                    textScaleFactor: 1.2,
                     style: myTextStyle,
-                  ),
-                  icon: new Icon(Icons.theaters,
-                      size: myIconSize, color: Colors.green)),
+                  )),
             ],
           ),
-        ),
-      ),
+        )
+        ,
+      )
+      ,
     );
   }
 }

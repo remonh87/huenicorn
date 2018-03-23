@@ -11,10 +11,11 @@ class CardSetting extends StatelessWidget {
     return new Container(
       padding: const EdgeInsets.only(bottom: 1.0),
       child: new Card(
+        color: Colors.grey[800],
         child: new Container(
           padding: const EdgeInsets.all(20.0),
-          child: new Column(
-            children: <Widget>[this.title, this.icon],
+          child: new Row(
+            children: <Widget>[this.icon, this.title],
           ),
         ),
       ),

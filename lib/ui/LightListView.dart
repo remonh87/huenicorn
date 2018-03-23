@@ -39,11 +39,15 @@ class _LightListViewState extends State<LightListView> {
   @override
   Widget build(BuildContext context) {
     return new ListView.builder(
-      itemCount: _lights.length,
-      itemBuilder: (BuildContext context, int index) {
-        final light = _lights[index];
-        return new LightRowView(_bridgeState, light);
-      }
+        itemCount: _lights.length,
+        itemBuilder: (BuildContext context, int index) {
+          final light = _lights[index];
+          return new Padding(padding: const EdgeInsets.only(
+              top: 5.0),
+              child: new LightRowView(_bridgeState, light)
+          );
+        }
     );
   }
+
 }
