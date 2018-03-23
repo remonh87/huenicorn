@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:huenicorn/BridgeStateProvider.dart';
 import 'package:huenicorn/Settings.dart';
-import 'package:huenicorn/ui/HuenicornSettings.dart';
 import 'package:huenicorn/ui/IpAddress.dart';
 import 'package:huenicorn/ui/LightListView.dart';
 
@@ -43,12 +42,14 @@ class _HuenicornHomeState extends State<HuenicornHome> {
       appBar: new AppBar(
         backgroundColor: Colors.grey[850],
         leading: new IconButton(
-          icon: new Icon(Icons.settings),
+          icon: new ImageIcon(
+            new AssetImage("assets/devices_bridges.png"),
+              size: 30.0, color: Colors.white),
           onPressed: () {
             Navigator.push(
               context,
               new MaterialPageRoute(
-                  builder: (context) => new HuenicornSettings()),
+                  builder: (context) => new IpAddress()),
             );
           },
         ),
