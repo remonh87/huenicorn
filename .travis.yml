@@ -9,11 +9,23 @@ addons:
     packages:
       - libstdc++6
       - fonts-droid
-before_script:
-  - git clone https://github.com/flutter/flutter.git -b beta --depth 1
-  - ./flutter/bin/flutter doctor
+before_install:
+  # Install flutter
+  - mkdir -p ../flutter
+  - git clone https://github.com/flutter/flutter.git -b beta --depth 1 "${HOME}/flutter"
+  - export PATH="${HOME}/flutter/bin":$PATH
+  - flutter doctor
+  # Installing stable Dart SDK
+  - sudo apt-get update
+  - sudo apt-get install apt-transport-https
+  - sudo sh -c 'curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -'
+  - sudo sh -c 'curl https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_stable.list > /etc/apt/sources.list.d/dart_stable.list'
+  - sudo apt-get update
+  - sudo apt-get install dart/stable
+  - export PATH=/usr/lib/dart/bin:$PATH
 script:
-  - ./flutter/bin/flutter test
+  - flutter test
+  - dartanalyzer --fatal-warnings --fatal-infos .
 cache:
   directories:
     - $HOME/.pub-cache
