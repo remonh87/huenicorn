@@ -2,12 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:huenicorn/Settings.dart';
 import 'package:huenicorn/main.dart';
+import 'package:huenicorn/network/bridge_client.dart';
 
 class IpAddress extends StatefulWidget {
   @override
   State createState() => new LoginPageState();
 }
 
+class BridgeUiDiscoveryReceiver implements BridgeDiscoveryReceiver {
+  TextEditingController ipAddressController;
+
+  BridgeUiDiscoveryReceiver (this.ipAddressController);
+
+  void bridgeDiscovered(String ipAdddress, String port) {
+    ipAddressController.text = ipAdddress;
+  }
+}
 
 class LoginPageState extends State<IpAddress>
     with SingleTickerProviderStateMixin {
@@ -16,6 +26,8 @@ class LoginPageState extends State<IpAddress>
   @override
   void initState() {
     super.initState();
+    FindBridgeByUpnp upnpFinder = new FindBridgeByUpnp(new BridgeUiDiscoveryReceiver(_controller));
+    upnpFinder.startSearch();
   }
 
   @override
