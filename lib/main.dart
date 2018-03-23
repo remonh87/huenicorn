@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:huenicorn/BridgeStateProvider.dart';
 import 'package:huenicorn/Settings.dart';
-import 'package:huenicorn/ui/HuenicornSettings.dart';
 import 'package:huenicorn/ui/IpAddress.dart';
 import 'package:huenicorn/ui/LightListView.dart';
 
