@@ -9,6 +9,7 @@ class LightSerializer {
       var light = new Light(json[id]['name']);
       light.isOn = json[id]['state']['on'];
       light.brightness = json[id]['state']['bri'];
+      light.hue = json[id]['state']['hue'];
       return light;
     }).toList();
   }
