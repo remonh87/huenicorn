@@ -24,6 +24,7 @@ class LoginPageState extends State<IpAddress>
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
+        backgroundColor: Colors.grey[850],
         leading: new IconButton(
           icon: new Icon(Icons.arrow_back),
           onPressed: () {

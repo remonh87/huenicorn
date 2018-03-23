@@ -15,10 +15,14 @@ class LightTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return new ListTile(
       enabled: true,
-      leading: new Icon(
-        Icons.lightbulb_outline, color: Colors.black, size: 30.0
+      leading:
+      new ImageIcon(new AssetImage("assets/bulbs_black.png"), color: Colors.white, size: 30.0),
+
+      title: new Text(_light.name,
+          textScaleFactor: 1.2,
+        style: new TextStyle( color: Colors.white),
       ),
-      title: new Text(_light.name, textScaleFactor: 1.5),
+
       onTap: () {
         Navigator.push(
           context,
