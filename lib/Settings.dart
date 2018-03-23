@@ -10,7 +10,7 @@ class Settings {
     return _settings;
   }
 
-  String whitelist = "";
+  String whitelist = "GGpMTyBqayQSIhWu4Uq9H0Shng0WMRexBrZd1hvN";
   String bridgeAddress = "";
 
 
