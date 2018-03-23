@@ -21,6 +21,7 @@ class _LightSwitchState extends State<LightSwitch> {
   Widget build(BuildContext context) {
     return new CupertinoSwitch(
       value: _isOn,
+      activeColor: Colors.grey[600],
       onChanged: (bool newValue) {
         setState(() {
           _isOn = newValue;

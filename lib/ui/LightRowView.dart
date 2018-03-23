@@ -17,6 +17,7 @@ class LightRowView extends StatelessWidget {
       padding: const EdgeInsets.only(
           left: 5.0, right: 5.0, top: 1.0, bottom: 1.0),
       child: new Card(
+        color: Colors.grey[800],
           elevation: 10.0,
           child: new Column(
               children: <Widget>[

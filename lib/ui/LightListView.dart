@@ -42,7 +42,10 @@ class _LightListViewState extends State<LightListView> {
       itemCount: _lights.length,
       itemBuilder: (BuildContext context, int index) {
         final light = _lights[index];
-        return new LightRowView(light.name, light.isOn);
+        return new Padding(padding: const EdgeInsets.only(
+            top: 5.0),
+            child: new LightRowView(light.name, light.isOn)
+          );
       }
     );
   }

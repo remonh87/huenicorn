@@ -32,6 +32,7 @@ class _HuenicornHomeState extends State<HuenicornHome> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
+        backgroundColor: Colors.grey[850],
         leading: new IconButton(
           icon: new Icon(Icons.settings),
           onPressed: () {
@@ -44,7 +45,11 @@ class _HuenicornHomeState extends State<HuenicornHome> {
         ),
         title: new Text('Home'),
       ),
-      body: new LightListView(_bridgeStateProvider.bridgeState)
+      body:
+      new Container(
+        color: Colors.grey[900],
+          child: new LightListView(_bridgeStateProvider.bridgeState)
+    ),
     );
   }
 }

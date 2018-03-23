@@ -16,6 +16,7 @@ class _BrightnessSliderState extends State<BrightnessSlider> {
       value: _brightnessLevel,
       min: 0.0,
       max: 100.0,
+      activeColor: Colors.grey,
       divisions: 100,
       onChanged: (double newValue) {
         setState(() {
