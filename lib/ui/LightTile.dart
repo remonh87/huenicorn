@@ -23,7 +23,7 @@ class LightTile extends StatelessWidget {
         Navigator.push(
           context,
           new MaterialPageRoute(
-              builder: (context) => new LightColorPicker(1)
+              builder: (context) => new LightColorPicker(_light, _bridgeState)
           ),
         );
       },

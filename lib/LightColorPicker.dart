@@ -1,23 +1,35 @@
+import 'package:color/color.dart' as NColor;
 import 'package:flutter/material.dart';
+import 'package:huenicorn/BridgeState.dart';
+import 'package:huenicorn/hue/light.dart';
 import 'package:material_pickers/material_pickers.dart';
+
 
 class LightColorPicker extends StatefulWidget {
 
-  final int lightId;
+  final Light light;
+  final BridgeState bridgeClient;
 
-  const LightColorPicker(this.lightId);
+  const LightColorPicker(this.light, this.bridgeClient);
 
   @override
   State<StatefulWidget> createState() {
-    return new LightPickerState();
+    return new LightPickerState(this.light, this.bridgeClient);
   }
 }
 
 class LightPickerState extends State<LightColorPicker> {
-  Color colorCode = new Color(121221);
+
+
+  final Light light;
+  final BridgeState bridgeClient;
+
+  LightPickerState(this.light, this.bridgeClient);
+
 
   @override
   Widget build(BuildContext context) {
+    Color colorCode = new Color(121221);
     return new Scaffold(
       appBar: new AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -51,10 +63,14 @@ class LightPickerState extends State<LightColorPicker> {
             new ColorPicker(
               type: MaterialType.transparency,
               onColor: (color) {
+                NColor.HslColor ncolor = new NColor.Color.rgb(
+                    colorCode.red, colorCode.green, colorCode.blue)
+                    .toHslColor();
+                light.hue = ncolor.h;
+                light.brightness = 99.0;
+                bridgeClient.setLight(light);
                 setState(() {
                   colorCode = color;
-                  //call akash function
-
                 });
               },
               currentColor: colorCode,

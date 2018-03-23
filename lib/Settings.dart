@@ -11,7 +11,7 @@ class Settings {
   }
 
   String whitelist = "GGpMTyBqayQSIhWu4Uq9H0Shng0WMRexBrZd1hvN";
-  String bridgeAddress = "";
+  String bridgeAddress = "192.168.1.132";
 
 
   getWhiteList() {
