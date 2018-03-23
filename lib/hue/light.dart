@@ -1,10 +1,10 @@
 class Light {
   String name;
   bool isOn;
-  int brightness = 0;
-  int hue = 0;
+  double brightness;
+  double hue;
 
   String id;
-
-  Light(this.name, [this.isOn = false]);
+  
+  Light(this.id, this.name, this.isOn, this.brightness, this.hue);
 }
