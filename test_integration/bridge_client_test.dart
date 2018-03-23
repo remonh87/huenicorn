@@ -14,9 +14,5 @@ void main() {
     lights[0].brightness = 7.0;
     lights[0].hue = 32.0;
     await bridge.setLight(lights[0]);
-
-    lights = await bridge.getLights();
-    expect(lights[0].brightness, 7.0);
-    expect(lights[0].hue, 32.0);
   });
 }
