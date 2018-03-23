@@ -3,8 +3,12 @@ import 'package:huenicorn/BridgeStateProvider.dart';
 import 'package:huenicorn/Settings.dart';
 import 'package:huenicorn/ui/HuenicornSettings.dart';
 import 'package:huenicorn/ui/LightListView.dart';
+import 'package:flutter_driver/driver_extension.dart';
 
-void main() => runApp(new MyApp());
+void main() {
+  enableFlutterDriverExtension();
+  runApp(new MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -31,20 +35,20 @@ class _HuenicornHomeState extends State<HuenicornHome> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(
-        leading: new IconButton(
-          icon: new Icon(Icons.settings),
-          onPressed: () {
-            Navigator.push(
-              context,
-              new MaterialPageRoute(
-                  builder: (context) => new HuenicornSettings()),
-            );
-          },
+        appBar: new AppBar(
+          leading: new IconButton(
+            icon: new Icon(Icons.settings),
+            onPressed: () {
+              Navigator.push(
+                context,
+                new MaterialPageRoute(
+                    builder: (context) => new HuenicornSettings()),
+              );
+            },
+          ),
+          title: new Text('Home'),
         ),
-        title: new Text('Home'),
-      ),
-      body: new LightListView(_bridgeStateProvider.bridgeState)
+        body: new LightListView(_bridgeStateProvider.bridgeState)
     );
   }
 }
