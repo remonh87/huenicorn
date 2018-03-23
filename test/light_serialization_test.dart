@@ -128,4 +128,10 @@ void main() {
     expect(lights[0].hue * 65535, 33665);
     expect(lights[1].hue * 65535, 1);
   });  
+
+  test('Lights have correct id', () {
+    var lights = (new LightDeserializer()).createLights(dualLightResponse);
+    expect(lights[0].id, '1');
+    expect(lights[1].id, '2');
+  });  
 }
