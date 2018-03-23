@@ -24,7 +24,12 @@ class BridgeClient {
 
   setLight(Light light) async {
     var url = 'http://' + bridgeAddress + '/api/' + token + '/lights/' + light.id + '/state';
-    var body = { "bri": light.brightness, "hue": light.hue };
+    var body = {
+      'on': light.isOn,
+      'hue': (light.hue / 360 * 65535).round(),
+      'sat': (light.saturation * 255).round(),
+      'bri': (light.brightness * 255).round(),
+    };
     await http.put(url, body: JSON.encode(body));
   }
 }
