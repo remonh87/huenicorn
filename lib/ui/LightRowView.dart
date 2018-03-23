@@ -13,11 +13,13 @@ class LightRowView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final hsvColor = new HSVColor.fromAHSV(1.0, _light.hue, _light.saturation, 1.0);
     return new Padding(
       padding: const EdgeInsets.only(
           left: 5.0, right: 5.0, top: 1.0, bottom: 1.0),
       child: new Card(
           elevation: 10.0,
+          color: hsvColor.toColor(),
           child: new Column(
               children: <Widget>[
                 new LightTile(_light.name, _light.isOn),

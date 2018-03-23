@@ -117,15 +117,21 @@ void main() {
     expect(lights[1].isOn, false);
   });
 
+  test('Lights have correct hue', () {
+    var lights = (new LightDeserializer()).createLights(dualLightResponse);
+    expect(lights[0].hue / 360 * 65535, 33665);
+    expect(lights[1].hue / 360 * 65535, 1);
+  });
+
+  test('Lights have correct saturation', () {
+    var lights = (new LightDeserializer()).createLights(dualLightResponse);
+    expect(lights[0].saturation * 255 , 143);
+    expect(lights[1].saturation * 255, 143);
+  });
+
   test('Lights have correct brightness', () {
     var lights = (new LightDeserializer()).createLights(dualLightResponse);
     expect(lights[0].brightness * 255, 254);
     expect(lights[1].brightness * 255, 127);
   });
-
-  test('Lights have correct color', () {
-    var lights = (new LightDeserializer()).createLights(dualLightResponse);
-    expect(lights[0].hue * 65535, 33665);
-    expect(lights[1].hue * 65535, 1);
-  });  
 }
