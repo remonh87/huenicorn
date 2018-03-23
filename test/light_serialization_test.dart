@@ -48,7 +48,7 @@ String lightTwo = '''"2": {
         "state": {
             "on": false,
             "bri": 127,
-            "hue": 33665,
+            "hue": 1,
             "sat": 143,
             "effect": "none",
             "xy": [
@@ -122,4 +122,10 @@ void main() {
     expect(lights[0].brightness, 254);
     expect(lights[1].brightness, 127);
   });
+
+  test('Lights have correct color', () {
+    var lights = (new LightSerializer()).createLights(dualLightResponse);
+    expect(lights[0].hue, 33665);
+    expect(lights[1].hue, 1);
+  });  
 }
