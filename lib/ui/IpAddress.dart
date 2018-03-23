@@ -41,9 +41,9 @@ class LoginPageState extends State<IpAddress>
           children: <Widget>[
             new Theme(
               data: new ThemeData(
-                  brightness: Brightness.light,
+                  brightness: Brightness.dark,
                   inputDecorationTheme: new InputDecorationTheme(
-                    hintStyle: new TextStyle(color: Colors.blue, fontSize: 20.0),
+                    hintStyle: new TextStyle(color: Colors.white, fontSize: 20.0),
                     labelStyle: new TextStyle(color: Colors.grey[600], fontSize: 25.0),
                   )),
               isMaterialAppTheme: true,
@@ -60,7 +60,8 @@ class LoginPageState extends State<IpAddress>
                           new TextFormField(
                             controller: _controller,
                             decoration: new InputDecoration(
-                                labelText: "Please enter ip address"),
+                              labelText: "Please enter ip address",
+                              fillColor: Colors.white),
                             keyboardType: TextInputType.number,
                           ),
                           new Padding(
