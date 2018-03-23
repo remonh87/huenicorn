@@ -31,10 +31,8 @@ class LightPickerState extends State<LightColorPicker> {
   @override
   Widget build(BuildContext context) {
     Color pickerColor = new Color(0xff443a49);
-    Color currentColor = new Color(0xff443a49);
-    ValueChanged<Color> onColorChanged;
     return new AlertDialog(
-      title: const Text('Pick a color!'),
+      title: new Text('Pick a color!'),
       content: new SingleChildScrollView(
         child: new ColorPicker(
           pickerColor: pickerColor,
@@ -45,9 +43,11 @@ class LightPickerState extends State<LightColorPicker> {
       ),
       actions: <Widget>[
         new FlatButton(
-          child: new Text('Got it'),
+          child:
+          new Row(
+              children: [new Text('Set color')]),
           onPressed: () {
-           updateLight();
+            updateLight();
             Navigator.of(context).pop();
           },
         ),
@@ -64,7 +64,7 @@ class LightPickerState extends State<LightColorPicker> {
     light.brightness = 0.99;
   }
 
-  updateLight(){
+  updateLight() {
     bridgeClient.setLight(light);
   }
 
