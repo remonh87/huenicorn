@@ -54,11 +54,10 @@ class _HuenicornHomeState extends State<HuenicornHome> {
         ),
         title: new Text('Home'),
       ),
-      body:
-      new Container(
+      body: new Container(
         color: Colors.grey[900],
-          child: new LightListView(_bridgeStateProvider.bridgeState)
-    )
+        child: new LightListView(_bridgeStateProvider.bridgeState)
+      )
     );
   }
 }

@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:huenicorn/BridgeStateProvider.dart';
 import 'package:huenicorn/Settings.dart';
-import 'package:huenicorn/ui/LightListView.dart';
-
+import 'package:huenicorn/main.dart';
 
 class IpAddress extends StatefulWidget {
   @override
@@ -91,8 +90,8 @@ class LoginPageState extends State<IpAddress>
                               context,
                               new MaterialPageRoute(
                                   builder: (context) =>
-                                  new LightListView(
-                                      _bridgeStateProvider.bridgeState)),
+                                    new HuenicornHome()
+                              )
                             );
                           }
                         },
