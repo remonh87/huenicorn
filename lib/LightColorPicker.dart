@@ -47,7 +47,7 @@ class LightPickerState extends State<LightColorPicker> {
         new FlatButton(
           child: new Text('Got it'),
           onPressed: () {
-            setState(() => currentColor = pickerColor);
+           updateLight();
             Navigator.of(context).pop();
           },
         ),
@@ -62,6 +62,9 @@ class LightPickerState extends State<LightColorPicker> {
         .toHslColor();
     light.hue = ncolor.h;
     light.brightness = 0.99;
+  }
+
+  updateLight(){
     bridgeClient.setLight(light);
   }
 
