@@ -53,6 +53,8 @@ class LightPickerState extends State<LightColorPicker> {
               onColor: (color) {
                 setState(() {
                   colorCode = color;
+                  //call akash function
+
                 });
               },
               currentColor: colorCode,

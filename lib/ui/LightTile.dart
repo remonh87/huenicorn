@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:huenicorn/HueLightColorPicker.dart';
+import 'package:huenicorn/LightColorPicker.dart';
 
 import 'LightSwitch.dart';
 // remove once we hook-up the tile to the color picker screen
@@ -21,7 +22,7 @@ class LightTile extends StatelessWidget{
         Navigator.push(
           context,
           new MaterialPageRoute(
-              builder: (context) => new HueLightColorPicker(1)),
+              builder: (context) => new LightColorPicker(1)),
         );
       },
       trailing: new LightSwitch(_isOn),
