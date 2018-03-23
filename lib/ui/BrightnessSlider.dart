@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:huenicorn/BridgeState.dart';
@@ -18,6 +20,7 @@ class _BrightnessSliderState extends State<BrightnessSlider> {
 
   final BridgeState _bridgeState;
   final Light _light;
+  Timer _timer;
 
   _BrightnessSliderState(this._bridgeState, this._light);
 
@@ -28,13 +31,17 @@ class _BrightnessSliderState extends State<BrightnessSlider> {
       min: 0.0,
       max: 1.0,
       activeColor: Colors.grey,
-      divisions: 64, // Use 255 to be accurate
-      onChanged: (double newValue) {
-        setState(() {
-          _light.brightness = newValue;
-          _bridgeState.setLight(_light);
-        });
-      }
+      divisions: 255,
+      onChanged: applyLater
     );
+  }
+
+  applyLater(double newValue) {
+    _light.brightness = newValue;
+    if (_timer?.isActive != true) {
+      _timer = new Timer(new Duration(milliseconds: 250), () {
+        _bridgeState.setLight(_light);
+      });
+    }
   }
 }
