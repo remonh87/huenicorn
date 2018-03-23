@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:huenicorn/hue/light.dart';
 
 import 'LightTile.dart';
 import 'BrightnessSlider.dart';
 
 class LightRowView extends StatelessWidget {
 
-  final String _title;
-  final bool _isOn;
+  final Light _light;
 
-  LightRowView(this._title, this._isOn);
+  LightRowView(this._light);
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +20,11 @@ class LightRowView extends StatelessWidget {
           elevation: 10.0,
           child: new Column(
               children: <Widget>[
-                new LightTile(_title, _isOn),
+                new LightTile(_light.name, _light.isOn),
                 new Row(
                   children: <Widget>[
                     new Expanded(
-                        child: new BrightnessSlider()
+                        child: new BrightnessSlider(_light.brightness)
                     ),
                   ],
                 )

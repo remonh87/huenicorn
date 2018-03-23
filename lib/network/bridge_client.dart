@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:huenicorn/hue/light.dart';
-import 'package:huenicorn/network/light_serializer.dart';
+import 'package:huenicorn/network/light_deserializer.dart';
 
 class BridgeClient {
   String bridgeAddress;
@@ -17,6 +17,6 @@ class BridgeClient {
     var request = await httpClient.getUrl(Uri.parse(url));
     var response = await request.close();
     var json = await response.transform(UTF8.decoder).join();
-    return (new LightSerializer()).createLights(json);
+    return (new LightDeserializer()).createLights(json);
   }
 }
