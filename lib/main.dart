@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:huenicorn/BridgeStateProvider.dart';
 import 'package:huenicorn/Settings.dart';
 import 'package:huenicorn/ui/HuenicornSettings.dart';
+import 'package:huenicorn/ui/IpAddress.dart';
 import 'package:huenicorn/ui/LightListView.dart';
 
 void main() => runApp(new MyApp());
@@ -12,8 +13,16 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       title: 'Huenicorn App',
       theme: new ThemeData.light(),
-      home: new HuenicornHome(),
+      home: getHome(context),
     );
+  }
+
+  getHome(BuildContext context) {
+    if (Settings.getInstance().getBridgeAddress() == "") {
+      return new IpAddress();
+    } else {
+      return new HuenicornHome();
+    }
   }
 }
 
@@ -26,7 +35,7 @@ class HuenicornHome extends StatefulWidget {
 
 class _HuenicornHomeState extends State<HuenicornHome> {
 
-  final _bridgeStateProvider = new BridgeStateProvider(new Settings());
+  final _bridgeStateProvider = new BridgeStateProvider(Settings.getInstance());
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +58,7 @@ class _HuenicornHomeState extends State<HuenicornHome> {
       new Container(
         color: Colors.grey[900],
           child: new LightListView(_bridgeStateProvider.bridgeState)
-    ),
+    )
     );
   }
 }

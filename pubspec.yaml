@@ -8,6 +8,8 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.0
   material_pickers: "^0.0.2"
+  color: ^2.0.2
+  font_awesome_flutter: 6.0.0
 
 
 dev_dependencies:
@@ -35,6 +37,8 @@ flutter:
     - assets/bulbs_black.png
     - assets/devices_bridges.png
     - assets/uicontrols_scenes.png
+    - assets/bridge_and_router.webp
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
@@ -59,5 +63,5 @@ flutter:
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
-  # For details regarding fonts from package dependencies, 
+  # For details regarding fonts from package dependencies,
   # see https://flutter.io/custom-fonts/#from-packages

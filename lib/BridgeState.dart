@@ -18,4 +18,11 @@ class BridgeState extends Object with ChangeNotifier {
         notifyListeners();
       });
   }
+
+  setLight(Light light) {
+    _bridgeClient.setLight(light)
+      .then((_) {
+        update();
+      });
+  }
 }

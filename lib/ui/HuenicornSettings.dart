@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:huenicorn/CardSetting.dart';
+import 'package:huenicorn/ui/IpAddress.dart';
 
 class HuenicornSettings extends StatefulWidget {
   HuenicornSettings({Key key}) : super(key: key);
@@ -34,18 +35,30 @@ class HuenicornSettingsState extends State<HuenicornSettings> {
           child: new Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              new CardSetting(
-                  icon: new ImageIcon(new AssetImage("assets/devices_bridges.png"),
+              new GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    new MaterialPageRoute(
+                        builder: (context) => new IpAddress()),
+                  );
+                }, child: new CardSetting(
+                  icon: new ImageIcon(
+                      new AssetImage("assets/devices_bridges.png"),
                       size: myIconSize, color: Colors.white),
                   title: new Text(
                     "Connect",
                     textScaleFactor: 1.2,
                     style: myTextStyle,
                   )),
+              ),
+
 
               new CardSetting(
-                icon: new ImageIcon(new AssetImage("assets/uicontrols_scenes.png"),
-                    size: myIconSize, color: Colors.white),
+                  icon: new ImageIcon(
+                      new AssetImage("assets/uicontrols_scenes.png"),
+                      size: myIconSize, color: Colors.white),
                   title: new Text(
                     "App Theme",
                     textScaleFactor: 1.2,
@@ -53,8 +66,10 @@ class HuenicornSettingsState extends State<HuenicornSettings> {
                   )),
             ],
           ),
-        ),
-      ),
+        )
+        ,
+      )
+      ,
     );
   }
 }

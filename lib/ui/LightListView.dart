@@ -44,9 +44,10 @@ class _LightListViewState extends State<LightListView> {
           final light = _lights[index];
           return new Padding(padding: const EdgeInsets.only(
               top: 5.0),
-              child: new LightRowView(light)
+              child: new LightRowView(_bridgeState, light)
           );
         }
     );
   }
+
 }

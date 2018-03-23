@@ -134,4 +134,10 @@ void main() {
     expect(lights[0].brightness * 255, 254);
     expect(lights[1].brightness * 255, 127);
   });
+
+  test('Lights have correct id', () {
+    var lights = (new LightDeserializer()).createLights(dualLightResponse);
+    expect(lights[0].id, '1');
+    expect(lights[1].id, '2');
+  });  
 }
