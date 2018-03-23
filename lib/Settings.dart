@@ -23,7 +23,7 @@ class Settings {
   }
 
   getBridgeAddress() {
-    return whitelist;
+    return bridgeAddress;
   }
 
   setBridgeAddress(String bridgeAddress) {
