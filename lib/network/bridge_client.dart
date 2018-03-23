@@ -21,6 +21,11 @@ class BridgeClient {
   }
 }
 
+abstract class BridgeDiscoveryReceiver {
+  void bridgeDiscovered (String ipAdddress, String port);
+}
+
+
 class FindBridgeByUpnp {
   // After start expect callbacks
   // After stop the might still be some delayed callbacks
@@ -32,9 +37,9 @@ class FindBridgeByUpnp {
   StreamSubscription socketListener;
 
   List<String> bridgesFoundAtIpAddress = new List<String>();
-  Function foundBridgeCallBack;
+  BridgeDiscoveryReceiver foundBridge;
 
-  FindBridgeByUpnp (this.foundBridgeCallBack);
+  FindBridgeByUpnp (this.foundBridge);
 
   void _handleRawSocketEvent (RawSocketEvent ev) {
     // if answer contains a SERVER line with IpBridge
@@ -72,7 +77,7 @@ class FindBridgeByUpnp {
           if (!bridgesFoundAtIpAddress.contains(foundIpAddress)) {
             bridgesFoundAtIpAddress.add (foundIpAddress);
             print ("Discovered bridge at $foundIpAddress : $foundPort");
-            foundBridgeCallBack(foundIpAddress, foundPort);
+            foundBridge.bridgeDiscovered(foundIpAddress, foundPort);
           }
         }
       }
@@ -91,7 +96,11 @@ class FindBridgeByUpnp {
     print ("Searching for bridge $count bytes send");
   }
 
-  void startSearch () async {
+  Future f() {
+    return new Future(() => null);
+  }
+
+  Future startSearch () async {
     // only tested with real bridge
     rawSocket = await RawDatagramSocket.bind(upnpIpAddress, upnpPort);
     socketListener = rawSocket.listen(_handleRawSocketEvent);
@@ -100,6 +109,7 @@ class FindBridgeByUpnp {
     rawSocket.joinMulticast(upnpIpAddress);
 
     new Timer(new Duration(seconds: 2), sendMSearchMessage);
+    return f();
   }
 
   void stopSearch () {
