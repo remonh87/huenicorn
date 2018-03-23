@@ -9,8 +9,9 @@ class LightDeserializer {
       var light = new Light(
         json[id]['name'],
         json[id]['state']['on'],
-        json[id]['state']['bri'] / 255.0,
-        json[id]['state']['hue'] / 65535
+        json[id]['state']['hue'] / 65535.0 * 360.0,
+        json[id]['state']['sat'] / 255.0,
+        json[id]['state']['bri'] / 255.0
       );
       return light;
     }).toList();
