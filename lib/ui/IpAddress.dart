@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:huenicorn/Settings.dart';
-import 'package:huenicorn/main.dart';
 import 'package:huenicorn/network/bridge_client.dart';
+import 'package:huenicorn/ui/PushLinkButtonScreen.dart';
 
 class IpAddress extends StatefulWidget {
   @override
@@ -114,12 +114,11 @@ class LoginPageState extends State<IpAddress>
         } else {
           Settings.getInstance().setBridgeAddress(
               _controller.text);
-          Navigator.pop(context);
           Navigator.push(
               context,
               new MaterialPageRoute(
                   builder: (context) =>
-                  new HuenicornHome()
+                  new PushLinkButtonScreen()
               )
           );
         }
