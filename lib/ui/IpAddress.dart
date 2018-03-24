@@ -117,8 +117,7 @@ class LoginPageState extends State<IpAddress>
           Navigator.push(
               context,
               new MaterialPageRoute(
-                  builder: (context) =>
-                  new PushLinkButtonScreen()
+                  builder: (context) => new PushLinkButtonScreen()
               )
           );
         }

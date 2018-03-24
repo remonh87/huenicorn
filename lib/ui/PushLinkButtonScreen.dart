@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:huenicorn/Settings.dart';
+import 'package:huenicorn/main.dart';
+import 'package:huenicorn/network/bridge_connect_activity.dart';
 
 class PushLinkButtonScreen extends StatefulWidget {
   @override
@@ -7,8 +9,18 @@ class PushLinkButtonScreen extends StatefulWidget {
 }
 
 class PushLinkButtonScreenState extends State<PushLinkButtonScreen> {
+  BridgeConnectActivity _bridgeConnectActivity;
+
   @override
   Widget build(BuildContext context) {
+    _bridgeConnectActivity = new BridgeConnectActivity( () {
+      Navigator.push(
+        context,
+        new MaterialPageRoute(
+            builder: (context) => new HuenicornHome()
+        )
+      );
+    });
     return new Scaffold(
       backgroundColor: Colors.grey[900],
       appBar: _appBar(context),
@@ -46,6 +58,7 @@ class PushLinkButtonScreenState extends State<PushLinkButtonScreen> {
       leading: new IconButton(
         icon: new Icon(Icons.arrow_back),
         onPressed: () {
+          _bridgeConnectActivity.stop();
           Settings.getInstance().setBridgeAddress("");
           Navigator.pop(context);
         }
