@@ -34,20 +34,7 @@ class LoginPageState extends State<IpAddress>
   Widget build(BuildContext context) {
     return new Scaffold(
       backgroundColor: Colors.grey[900],
-      appBar: new AppBar(
-        backgroundColor: Colors.grey[850],
-        leading: new IconButton(
-          icon: new Icon(Icons.arrow_back),
-          onPressed: () {
-            if (Settings.getInstance().getBridgeAddress() == "") {
-              showEnterIpDialog();
-            } else {
-              Navigator.pop(context);
-            }
-          },
-        ),
-        title: new Text('Connect to Bridge'),
-      ),
+      appBar: _createAppBar(context),
       body: new Stack(
           fit: StackFit.expand,
           children: <Widget>[
@@ -69,49 +56,16 @@ class LoginPageState extends State<IpAddress>
                       child: new Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          new TextFormField(
-                            controller: _controller,
-                            decoration: new InputDecoration(
-                              labelText: "Please enter ip address",
-                              fillColor: Colors.white),
-                            keyboardType: TextInputType.number,
-                          ),
+                          _createIpAddressTextFormField(context),
                           new Padding(
                             padding: const EdgeInsets.only(top: 40.0),
                           ),
-                          new MaterialButton(
-                            height: 50.0,
-                            minWidth: 150.0,
-                            color: Colors.green,
-                            splashColor: Colors.teal,
-                            textColor: Colors.white,
-                            child: new Icon(FontAwesomeIcons.check),
-                            onPressed: () {
-                              if (_controller.text.trim() == "") {
-                                showEnterIpDialog();
-                              } else {
-                                Settings.getInstance().setBridgeAddress(
-                                    _controller.text);
-                                Navigator.pop(context);
-                                Navigator.push(
-                                    context,
-                                    new MaterialPageRoute(
-                                        builder: (context) =>
-                                        new HuenicornHome()
-                                    )
-                                );
-                              }
-                            },
-                          )
+                          _createOkButton(context)
                         ],
                       ),
                     ),
                   ),
-                  new Image(
-                    image: new AssetImage("assets/bridge_and_router.webp"),
-                    height: 200.0,
-                    fit: BoxFit.contain,
-                  ),
+                  _createBridgeImage(context)
                 ],
               ),
             ),
@@ -119,10 +73,73 @@ class LoginPageState extends State<IpAddress>
     );
   }
 
-  void showEnterIpDialog() {
+  AppBar _createAppBar(BuildContext context) {
+    return new AppBar(
+      backgroundColor: Colors.grey[850],
+      leading: new IconButton(
+        icon: new Icon(Icons.arrow_back),
+        onPressed: () {
+          if (Settings.getInstance().getBridgeAddress() == "") {
+            _showEnterIpDialog();
+          } else {
+            Navigator.pop(context);
+          }
+        },
+      ),
+      title: new Text('Connect to Bridge'),
+    );
+  }
+
+  Widget _createIpAddressTextFormField(BuildContext context) {
+    return new TextFormField(
+      controller: _controller,
+      decoration: new InputDecoration(
+        labelText: "Please enter ip address",
+        fillColor: Colors.white),
+      keyboardType: TextInputType.number,
+    );
+  }
+
+  Widget _createOkButton(BuildContext context) {
+    return new MaterialButton(
+      height: 50.0,
+      minWidth: 150.0,
+      color: Colors.green,
+      splashColor: Colors.teal,
+      textColor: Colors.white,
+      child: new Icon(FontAwesomeIcons.check),
+      onPressed: () {
+        if (_controller.text.trim() == "") {
+          _showEnterIpDialog();
+        } else {
+          Settings.getInstance().setBridgeAddress(
+              _controller.text);
+          Navigator.pop(context);
+          Navigator.push(
+              context,
+              new MaterialPageRoute(
+                  builder: (context) =>
+                  new HuenicornHome()
+              )
+          );
+        }
+      },
+    );
+  }
+
+  Widget _createBridgeImage(BuildContext context) {
+    return new Image(
+      image: new AssetImage("assets/bridge_and_router.webp"),
+      height: 200.0,
+      fit: BoxFit.contain,
+    );
+  }
+
+  void _showEnterIpDialog() {
     showDialog(context: context,
         child: new AlertDialog(
           title: new Text('Please type IP Address'),
         ));
   }
+
 }
