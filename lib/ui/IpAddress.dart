@@ -26,8 +26,8 @@ class LoginPageState extends State<IpAddress>
   @override
   void initState() {
     super.initState();
-    // FindBridgeByUpnp upnpFinder = new FindBridgeByUpnp(new BridgeUiDiscoveryReceiver(_controller));
-    // upnpFinder.startSearch();
+    FindBridgeByUpnp upnpFinder = new FindBridgeByUpnp(new BridgeUiDiscoveryReceiver(_controller));
+    upnpFinder.startSearch();
   }
 
   @override

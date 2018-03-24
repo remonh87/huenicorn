@@ -41,63 +41,83 @@ abstract class BridgeDiscoveryReceiver {
 
 class FindBridgeByUpnp {
   // After start expect callbacks
-  // After stop the might still be some delayed callbacks
-  // Weird: discovery seems slow
+  // After stop there might still be some (delayed) asynchronous callbacks
   final InternetAddress upnpIpAddress = new InternetAddress("239.255.255.250");
   final int upnpPort = 1900;
-
-  RawDatagramSocket rawSocket;
-  StreamSubscription socketListener;
+  RawDatagramSocket upnpSocket;
 
   List<String> bridgesFoundAtIpAddress = new List<String>();
   BridgeDiscoveryReceiver foundBridge;
 
   FindBridgeByUpnp (this.foundBridge);
 
-  void _handleRawSocketEvent (RawSocketEvent ev) {
-    // if answer contains a SERVER line with IpBridge
-    //    SERVER: Linux/3.14.0 UPnP/1.0 IpBridge/1.11.0
-    // then we found a Hue bridge.
-    // The bridge ip-address can be read from the upnp XML file address
-    //    LOCATION: http://192.168.0.39:80/description.xml
-    bool foundIpBridge = false;
-    String foundIpAddress;
-    String foundPort = "80";
+  void _handleUpnpMessage (String upnpReply) {
+    // Process UPnP responses, there will be multiple and they keep on coming.
+    // Filter on Hue bridges
+    // example message, hue bridge v1
+    //     CACHE-CONTROL: max-age=100
+    //     EXT:
+    //     LOCATION: http://192.168.0.18:80/description.xml
+    //     SERVER: FreeRTOS/6.0.5, UPnP/1.0, IpBridge/0.1
+    //     hue-bridgeid: 001788FFFE10377A
+    //     ST: uuid:2f402f80-da50-11e1-9b23-00178810377a
+    //     USN: uuid:2f402f80-da50-11e1-9b23-00178810377a
+    // example message, hue bridge v2
+    //     EXT:
+    //     CACHE-CONTROL: max-age=100
+    //     LOCATION: http://192.168.0.39:80/description.xml
+    //     SERVER: Linux/3.14.0 UPnP/1.0 IpBridge/1.11.0
+    //     hue-bridgeid: 001788FFFE20069F
+    //     ST: upnp:rootdevice
+    //     USN: uuid:2f402f80-da50-11e1-9b23-00178820069f::upnp:rootdevice
+    //
+    // SERVER line should have a 4th part IpBridge/*
+    // LOCATION line provides IP address
+    // hue-bridgeid line provides EUI64
 
-    if(ev == RawSocketEvent.READ){
-      String upnpReply = (new AsciiDecoder()).convert(rawSocket.receive().data);
-      for (var upnpLine in upnpReply.split('\n')) {
-        if (upnpLine.startsWith("SERVER:")) {
-          List<String> upnpWords = upnpLine.split(' ');
-          if ((upnpWords.length > 3) && (upnpWords[3].startsWith("IpBridge"))) {
-            foundIpBridge = true;
-          }
-        } else if (upnpLine.startsWith("LOCATION:")) {
-          List<String> upnpParts = upnpLine.split('/');
-          if (upnpParts.length > 2) {
-            foundIpAddress = upnpParts[2];
-            int index = foundIpAddress.indexOf (':'); // :80 is optional
-            if (index != -1) {
-              if (index < foundIpAddress.length-1) {
-                foundPort = foundIpAddress.substring(index + 1);
-              }
-              foundIpAddress = foundIpAddress.substring (0, index);
-            }
-          }
-        }
-        // bridges are announced repeatedly, filter duplicates
-        if (foundIpBridge && (foundIpAddress != null)) {
-          if (!bridgesFoundAtIpAddress.contains(foundIpAddress)) {
-            bridgesFoundAtIpAddress.add (foundIpAddress);
-            print ("Discovered bridge at $foundIpAddress : $foundPort");
-            foundBridge.bridgeDiscovered(foundIpAddress, foundPort);
-          }
-        }
+    bool foundIpBridge = false; // confirm from SERVER
+    String foundIpAddress; // extract from LOCATION
+    String foundIpPort; // extract from LOCATION
+    // String foundBridgeId; // extract from hue-bridgeid - works, but not yet used
+    var upnpLines = new Map<String, String>();
+
+    try {
+      upnpReply.split('\n').forEach((String s2) {
+        upnpLines[s2.split(':')[0]] = s2;
+      });
+      // split SERVER by spaces, 4th part should be "IpBridge/..."
+      List<String> words = upnpLines["SERVER"].split(' ');
+      foundIpBridge = (words.length > 3) && words[3].startsWith("IpBridge");
+      // split LOCATION by slashes, 3rd part should be IP address
+      List<String> parts = upnpLines["LOCATION"].split('/');
+      int index = parts[2].indexOf(':'); // port in :80 is optional
+      if ((index == -1) || (index >= parts[2].length)) {
+        foundIpPort = "80"; // default CLIP port
+        foundIpAddress = parts[2];
+      } else {
+        foundIpPort = parts[2].substring(index + 1);
+        foundIpAddress = parts[2].substring(0, index);
+      }
+      // split hue-bridgeid by colon, 2nd part should be bridge ID
+      // foundBridgeId = upnpLines["hue-bridgeid"].split(':')[1].trim();
+    } catch (e) {
+      // decode or parse error in bad or unexpected UPnP reply
+      // e.g. no LOCATION, other SERVER structure, no hue-bridgeid
+      // which might come from an UPnP internet radio or gateway
+      return;
+    }
+
+    // bridges are announced repeatedly, filter duplicates
+    if (foundIpBridge && (foundIpAddress != null)) {
+      if (!bridgesFoundAtIpAddress.contains(foundIpAddress)) {
+        bridgesFoundAtIpAddress.add (foundIpAddress);
+        print ("Discovered bridge at $foundIpAddress : $foundIpPort");
+        foundBridge.bridgeDiscovered(foundIpAddress, foundIpPort);
       }
     }
   }
 
-  void sendMSearchMessage () {
+  void _sendMSearchMessage () {
     final String mSearchString =
         "M-SEARCH * HTTP/1.1\r\n" +
             "HOST: 239.255.255.250:1900\r\n" +
@@ -105,30 +125,42 @@ class FindBridgeByUpnp {
             "MX: 3\r\n" +
             "ST: upnp:rootdevice\r\n";
     List<int> mSearchBytes = (new AsciiEncoder()).convert(mSearchString);
-    int count = rawSocket.send(mSearchBytes, upnpIpAddress, upnpPort);
-    print ("Searching for bridge $count bytes send");
+
+    RawDatagramSocket.bind(upnpIpAddress, upnpPort)
+        .then((RawDatagramSocket socket) {
+        socket.broadcastEnabled = true;
+        socket.multicastHops = 1; // set TimeToLive
+        socket.multicastLoopback = false; // don't receive my own message
+        int count = socket.send(mSearchBytes, upnpIpAddress, upnpPort);
+        print ("Searching for bridge $count bytes send");
+    });
   }
 
-  Future f() {
-    return new Future(() => null);
+  void startSearch ()  {
+    // Bind UDP socket to UPnP multicast group, after 1 second
+    // send UPnP search message and process responses.
+    RawDatagramSocket.bind(InternetAddress.ANY_IP_V4, upnpPort)
+        .then((RawDatagramSocket socket) {
+      upnpSocket = socket;
+      // iOS throws an exception on join multi-cast, don't know why
+      // but without a join we won't receive any UPnP message :-(
+      socket.joinMulticast(upnpIpAddress);
+      socket.listen((RawSocketEvent ev){
+        if(ev == RawSocketEvent.READ) {
+          String reply = (new AsciiDecoder()).convert(socket.receive().data);
+          _handleUpnpMessage (reply);
+        }
+      });
+      new Timer(new Duration(seconds: 1), _sendMSearchMessage);
+    });
   }
 
-  Future startSearch () async {
-    // only tested with real bridge
-    rawSocket = await RawDatagramSocket.bind(upnpIpAddress, upnpPort);
-    socketListener = rawSocket.listen(_handleRawSocketEvent);
-    rawSocket.multicastHops = 64; // set TimeToLive
-    rawSocket.multicastLoopback = false; // don't receive my own message
-    rawSocket.joinMulticast(upnpIpAddress);
-
-    new Timer(new Duration(seconds: 2), sendMSearchMessage);
-    return f();
-  }
-
-  void stopSearch () {
-    // not tested yet
-    socketListener.cancel();
-    rawSocket.leaveMulticast(upnpIpAddress);
-    rawSocket.close();
+  void stopSearch () { // not tested yet
+    // stop only once
+    if (upnpSocket != null) {
+      // upnpSocket.leaveMulticast(upnpIpAddress);
+      upnpSocket.close();
+      upnpSocket = null;
+    }
   }
 }
