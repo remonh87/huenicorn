@@ -133,7 +133,7 @@ class FindBridgeByUpnp {
     });
   }
 
-  void startSearch () async {
+  void startSearch ()  {
     // Bind UDP socket to UPnP multicast group, after 1 second
     // send UPnP search message and process responses.
     RawDatagramSocket.bind(InternetAddress.ANY_IP_V4, upnpPort)
