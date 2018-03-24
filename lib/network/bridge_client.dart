@@ -39,7 +39,7 @@ abstract class BridgeDiscoveryReceiver {
 }
 
 
-class FindBridgeByUpnp {
+class FindBridgesOnNetwork {
   // After start expect callbacks
   // After stop there might still be some (delayed) asynchronous callbacks
   final InternetAddress upnpIpAddress = new InternetAddress("239.255.255.250");
@@ -49,7 +49,38 @@ class FindBridgeByUpnp {
   List<String> bridgesFoundAtIpAddress = new List<String>();
   BridgeDiscoveryReceiver foundBridge;
 
-  FindBridgeByUpnp (this.foundBridge);
+  FindBridgesOnNetwork (this.foundBridge);
+
+  void startSearch () {
+    startNupnpSearch();
+    startUpnpSearch();
+  }
+
+  void stopSearch () {
+    // no need to stop NUPnP
+    stopUpnpSearch();
+  }
+
+  void bridgeDiscovered (String ipAddressWithPort, String bridgeId) {
+    String ipAddress;
+    String ipPort;
+
+    int index = ipAddressWithPort.indexOf(':'); // port like :80 is optional
+    if (index == -1) {
+      ipPort = "80"; // default CLIP port
+      ipAddress = ipAddressWithPort;
+    } else {
+      ipPort = ipAddressWithPort.substring(index + 1);
+      ipAddress = ipAddressWithPort.substring(0, index);
+    }
+
+    // bridges are announced repeatedly, filter duplicates
+    if (!bridgesFoundAtIpAddress.contains(ipAddress)) {
+      bridgesFoundAtIpAddress.add(ipAddress);
+      print("Discovered bridge $bridgeId at $ipAddress : $ipPort");
+      foundBridge.bridgeDiscovered(ipAddress, ipPort);
+    }
+  }
 
   void _handleUpnpMessage (String upnpReply) {
     // Process UPnP responses, there will be multiple and they keep on coming.
@@ -77,29 +108,21 @@ class FindBridgeByUpnp {
 
     bool foundIpBridge = false; // confirm from SERVER
     String foundIpAddress; // extract from LOCATION
-    String foundIpPort; // extract from LOCATION
-    // String foundBridgeId; // extract from hue-bridgeid - works, but not yet used
+    String foundBridgeId; // extract from hue-bridgeid - works, but not yet used
     var upnpLines = new Map<String, String>();
 
     try {
       upnpReply.split('\n').forEach((String s2) {
         upnpLines[s2.split(':')[0]] = s2;
       });
-      // split SERVER by spaces, 4th part should be "IpBridge/..."
+
       List<String> words = upnpLines["SERVER"].split(' ');
-      foundIpBridge = (words.length > 3) && words[3].startsWith("IpBridge");
-      // split LOCATION by slashes, 3rd part should be IP address
+      foundIpBridge = words[3].startsWith("IpBridge");
+
       List<String> parts = upnpLines["LOCATION"].split('/');
-      int index = parts[2].indexOf(':'); // port in :80 is optional
-      if ((index == -1) || (index >= parts[2].length)) {
-        foundIpPort = "80"; // default CLIP port
-        foundIpAddress = parts[2];
-      } else {
-        foundIpPort = parts[2].substring(index + 1);
-        foundIpAddress = parts[2].substring(0, index);
-      }
-      // split hue-bridgeid by colon, 2nd part should be bridge ID
-      // foundBridgeId = upnpLines["hue-bridgeid"].split(':')[1].trim();
+      foundIpAddress = parts[2];
+
+      foundBridgeId = upnpLines["hue-bridgeid"].split(':')[1].trim();
     } catch (e) {
       // decode or parse error in bad or unexpected UPnP reply
       // e.g. no LOCATION, other SERVER structure, no hue-bridgeid
@@ -107,13 +130,8 @@ class FindBridgeByUpnp {
       return;
     }
 
-    // bridges are announced repeatedly, filter duplicates
     if (foundIpBridge && (foundIpAddress != null)) {
-      if (!bridgesFoundAtIpAddress.contains(foundIpAddress)) {
-        bridgesFoundAtIpAddress.add (foundIpAddress);
-        print ("Discovered bridge at $foundIpAddress : $foundIpPort");
-        foundBridge.bridgeDiscovered(foundIpAddress, foundIpPort);
-      }
+      bridgeDiscovered (foundIpAddress, foundBridgeId);
     }
   }
 
@@ -136,7 +154,7 @@ class FindBridgeByUpnp {
     });
   }
 
-  void startSearch ()  {
+  void startUpnpSearch ()  {
     // Bind UDP socket to UPnP multicast group, after 1 second
     // send UPnP search message and process responses.
     RawDatagramSocket.bind(InternetAddress.ANY_IP_V4, upnpPort)
@@ -155,12 +173,32 @@ class FindBridgeByUpnp {
     });
   }
 
-  void stopSearch () { // not tested yet
+  void stopUpnpSearch () { // not tested yet
     // stop only once
     if (upnpSocket != null) {
       // upnpSocket.leaveMulticast(upnpIpAddress);
       upnpSocket.close();
       upnpSocket = null;
+    }
+  }
+
+  void startNupnpSearch () async {
+    try {
+      var nupnpUrl = "https://www.meethue.com/api/nupnp";
+      var httpClient = new HttpClient();
+      var request = await httpClient.getUrl(Uri.parse(nupnpUrl));
+      var response = await request.close();
+      var jsonString = await response.transform(UTF8.decoder).join();
+      var jsonArray = JSON.decode(jsonString);
+      // example answer of bridges seen by Hue portal on this IP address:
+      // []
+      // [{"id":"001788fffe10377a","internalipaddress":"192.168.0.18"}]
+      // [{"id":"001788fffe10377a","internalipaddress":"192.168.0.18"}, ...
+      jsonArray.forEach((s) {
+        bridgeDiscovered(s["internalipaddress"], s["id"]);
+      });
+    } catch (e) {
+      // Can fail (e.g. meethue not found if not connected to internet).
     }
   }
 }
