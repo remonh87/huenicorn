@@ -182,7 +182,7 @@ class FindBridgesOnNetwork {
     }
   }
 
-  void startNupnpSearch () async {
+  startNupnpSearch () async {
     try {
       var nupnpUrl = "https://www.meethue.com/api/nupnp";
       var httpClient = new HttpClient();
