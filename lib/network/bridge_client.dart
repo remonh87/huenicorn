@@ -104,7 +104,7 @@ class FindBridgeByUpnp {
       // decode or parse error in bad or unexpected UPnP reply
       // e.g. no LOCATION, other SERVER structure, no hue-bridgeid
       // which might come from an UPnP internet radio or gateway
-      return; // abort
+      foundIpBridge = false;
     };
 
     // bridges are announced repeatedly, filter duplicates
