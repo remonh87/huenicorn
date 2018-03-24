@@ -101,7 +101,10 @@ class FindBridgeByUpnp {
       // split hue-bridgeid by colon, 2nd part should be bridge ID
       // foundBridgeId = upnpLines["hue-bridgeid"].split(':')[1].trim();
     } catch (e) {
-      // decode or parse error in (bad) UPnP reply
+      // decode or parse error in bad or unexpected UPnP reply
+      // e.g. no LOCATION, other SERVER structure, no hue-bridgeid
+      // which might come from an UPnP internet radio or gateway
+      print ("can't decode UPnP reply");
     };
 
     // bridges are announced repeatedly, filter duplicates
