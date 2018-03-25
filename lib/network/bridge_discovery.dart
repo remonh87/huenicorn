@@ -17,8 +17,8 @@ class FindBridgesOnNetwork {
   FindBridgesOnNetwork(this.foundBridgeCallback);
 
   void startSearch() {
-    startNupnpSearch();
-    startUpnpSearch();
+    startNupnpSearch(); // only finds bridges connected to the Hue portal
+    startUpnpSearch();  // finds bridges via local IP broadcast
   }
 
   void stopSearch() {
@@ -114,7 +114,7 @@ class FindBridgesOnNetwork {
       socket.broadcastEnabled = true;
       socket.multicastHops = 1; // set TimeToLive
       socket.multicastLoopback = false; // don't receive my own message
-      socket.joinMulticast(upnpIpAddress);
+//      socket.joinMulticast(upnpIpAddress); - send socket, no need to specify receive option
       int count = socket.send(mSearchBytes, upnpIpAddress, upnpPort);
       print("Searching for bridge $count bytes send");
     });
@@ -124,11 +124,11 @@ class FindBridgesOnNetwork {
     // Bind UDP socket to UPnP multicast group, after 1 second
     // send UPnP search message and process responses.
     RawDatagramSocket
-        .bind(InternetAddress.ANY_IP_V4, 0)
+        .bind(InternetAddress.ANY_IP_V4, upnpPort) // need upnp port - on port 0 we won't receive anything
         .then((RawDatagramSocket socket) {
       upnpSocket = socket;
-      socket.broadcastEnabled = true;
-      socket.multicastHops = 50;
+//      socket.broadcastEnabled = true; - receive socket, no need to specify send option
+//      socket.multicastHops = 50; - receive socket, no need to specify send option
       // iOS throws an exception on join multi-cast, don't know why
       // but without a join we won't receive any UPnP message :-(
       socket.joinMulticast(upnpIpAddress);
