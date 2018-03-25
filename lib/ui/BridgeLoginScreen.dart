@@ -67,17 +67,6 @@ class BridgeLoginScreenState extends State<BridgeLoginScreen>
   AppBar _createAppBar(BuildContext context) {
     return new AppBar(
       backgroundColor: Colors.grey[850],
-
-//      leading: new IconButton(
-//        icon: new Icon(Icons.arrow_back),
-//        onPressed: () {
-//          if (Settings.getInstance().isInitialized) {
-//            Navigator.pop(context);
-//          } else {
-//            _showEnterIpDialog();
-//          }
-//        },
-//      ),
       title: new Text('Connect to Bridge'),
     );
   }
