@@ -27,17 +27,17 @@ class PushLinkButtonScreenState extends State<PushLinkButtonScreen> {
               inputDecorationTheme: new InputDecorationTheme(
                 hintStyle: new TextStyle(color: Colors.white, fontSize: 20.0),
                 labelStyle:
-                    new TextStyle(color: Colors.grey[600], fontSize: 25.0),
+                new TextStyle(color: Colors.grey[600], fontSize: 25.0),
               )),
           isMaterialAppTheme: true,
           child: new Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              _bridgeImage(context),
+              _textPressingBridgeButton(context),
               new Padding(
                 padding: const EdgeInsets.only(top: 80.0),
               ),
-              _textPressingBridgeButton(context)
+              _bridgeImage(context),
             ],
           ),
         ),
@@ -68,12 +68,17 @@ class PushLinkButtonScreenState extends State<PushLinkButtonScreen> {
   }
 
   Widget _textPressingBridgeButton(BuildContext context) {
-    return new Text('Press button on the bridge',
-        textAlign: TextAlign.center,
-        overflow: TextOverflow.ellipsis,
-        style: DefaultTextStyle.of(context).style.apply(
-            fontSizeFactor: 0.5,
-            color: Colors.white,
-            decoration: TextDecoration.none));
+    return
+      new Padding(padding: const EdgeInsets.only(left:20.0, right: 5.0),
+          child: new Text('Press pushlink button on the bridge',
+              textAlign: TextAlign.left,
+              softWrap: true,
+              overflow: TextOverflow.fade,
+              style: new TextStyle(
+                  fontSize: 20.4,
+                  color: Colors.white,
+                  decoration: TextDecoration.none))
+      );
   }
+
 }
