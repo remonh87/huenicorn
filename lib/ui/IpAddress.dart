@@ -12,7 +12,7 @@ class IpAddress extends StatefulWidget {
 class BridgeUiDiscoveryReceiver implements BridgeDiscoveryReceiver {
   TextEditingController ipAddressController;
 
-  BridgeUiDiscoveryReceiver (this.ipAddressController);
+  BridgeUiDiscoveryReceiver(this.ipAddressController);
 
   void bridgeDiscovered(String ipAdddress, String port) {
     ipAddressController.text = ipAdddress;
@@ -26,7 +26,8 @@ class LoginPageState extends State<IpAddress>
   @override
   void initState() {
     super.initState();
-    FindBridgesOnNetwork bridgeFinder = new FindBridgesOnNetwork(new BridgeUiDiscoveryReceiver(_controller));
+    FindBridgesOnNetwork bridgeFinder =
+        new FindBridgesOnNetwork(new BridgeUiDiscoveryReceiver(_controller));
     bridgeFinder.startSearch();
   }
 
@@ -35,41 +36,40 @@ class LoginPageState extends State<IpAddress>
     return new Scaffold(
       backgroundColor: Colors.grey[900],
       appBar: _createAppBar(context),
-      body: new Stack(
-          fit: StackFit.expand,
-          children: <Widget>[
-            new Theme(
-              data: new ThemeData(
-                  brightness: Brightness.dark,
-                  inputDecorationTheme: new InputDecorationTheme(
-                    hintStyle: new TextStyle(color: Colors.white, fontSize: 20.0),
-                    labelStyle: new TextStyle(color: Colors.grey[600], fontSize: 25.0),
-                  )),
-              isMaterialAppTheme: true,
-              child: new Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  new Container(
-                    padding: const EdgeInsets.all(30.0),
-                    child: new Form(
-                      autovalidate: true,
-                      child: new Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          _createIpAddressTextFormField(context),
-                          new Padding(
-                            padding: const EdgeInsets.only(top: 40.0),
-                          ),
-                          _createOkButton(context)
-                        ],
+      body: new Stack(fit: StackFit.expand, children: <Widget>[
+        new Theme(
+          data: new ThemeData(
+              brightness: Brightness.dark,
+              inputDecorationTheme: new InputDecorationTheme(
+                hintStyle: new TextStyle(color: Colors.white, fontSize: 20.0),
+                labelStyle:
+                    new TextStyle(color: Colors.grey[600], fontSize: 25.0),
+              )),
+          isMaterialAppTheme: true,
+          child: new Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              new Container(
+                padding: const EdgeInsets.all(30.0),
+                child: new Form(
+                  autovalidate: true,
+                  child: new Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      _createIpAddressTextFormField(context),
+                      new Padding(
+                        padding: const EdgeInsets.only(top: 40.0),
                       ),
-                    ),
+                      _createOkButton(context)
+                    ],
                   ),
-                  _createBridgeImage(context)
-                ],
+                ),
               ),
-            ),
-          ]),
+              _createBridgeImage(context)
+            ],
+          ),
+        ),
+      ]),
     );
   }
 
@@ -79,10 +79,10 @@ class LoginPageState extends State<IpAddress>
       leading: new IconButton(
         icon: new Icon(Icons.arrow_back),
         onPressed: () {
-          if (Settings.getInstance().getBridgeAddress() == "") {
-            _showEnterIpDialog();
-          } else {
+          if (Settings.getInstance().isInitialized) {
             Navigator.pop(context);
+          } else {
+            _showEnterIpDialog();
           }
         },
       ),
@@ -94,8 +94,7 @@ class LoginPageState extends State<IpAddress>
     return new TextFormField(
       controller: _controller,
       decoration: new InputDecoration(
-        labelText: "Please enter ip address",
-        fillColor: Colors.white),
+          labelText: "Please enter ip address", fillColor: Colors.white),
       keyboardType: TextInputType.number,
     );
   }
@@ -112,14 +111,11 @@ class LoginPageState extends State<IpAddress>
         if (_controller.text.trim() == "") {
           _showEnterIpDialog();
         } else {
-          Settings.getInstance().setBridgeAddress(
-              _controller.text);
+          Settings.getInstance().setBridgeAddress(_controller.text);
           Navigator.push(
               context,
               new MaterialPageRoute(
-                  builder: (context) => new PushLinkButtonScreen()
-              )
-          );
+                  builder: (context) => new PushLinkButtonScreen()));
         }
       },
     );
@@ -134,10 +130,10 @@ class LoginPageState extends State<IpAddress>
   }
 
   void _showEnterIpDialog() {
-    showDialog(context: context,
+    showDialog(
+        context: context,
         child: new AlertDialog(
           title: new Text('Please type IP Address'),
         ));
   }
-
 }

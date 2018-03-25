@@ -13,7 +13,7 @@ class BridgeConnectActivity {
   }
 
   void stop() {
-    if(_timer != null) {
+    if (_timer != null) {
       _timer.cancel();
     }
   }
@@ -26,27 +26,20 @@ class BridgeConnectActivity {
     var bridgeAddress = Settings.getInstance().bridgeAddress;
     var url = 'http://' + bridgeAddress + '/api/';
     var httpClient = new HttpClient();
-    httpClient.postUrl(Uri.parse(url)).then(
-      (request) {
-        request.write(JSON.encode({"devicetype":"huenicorn"}));
-        request.close().then(
-          (response) {
-            response.transform(UTF8.decoder).join().then(
-              (responseData) {
-                var r = JSON.decode(responseData);
-                bool connected = r[0].containsKey("success");
-                if (connected) {
-                  Settings.getInstance().whitelist = r[0]["success"]["username"];
-                  Function.apply(_connected,[]);
-                }
-                else {
-                  _startTimer();
-                }
-              }
-            );
+    httpClient.postUrl(Uri.parse(url)).then((request) {
+      request.write(JSON.encode({"devicetype": "huenicorn"}));
+      request.close().then((response) {
+        response.transform(UTF8.decoder).join().then((responseData) {
+          var r = JSON.decode(responseData);
+          bool connected = r[0].containsKey("success");
+          if (connected) {
+            Settings.getInstance().setWhiteList(r[0]["success"]["username"]);
+            Function.apply(_connected, []);
+          } else {
+            _startTimer();
           }
-        );
-      }
-    );
+        });
+      });
+    });
   }
 }

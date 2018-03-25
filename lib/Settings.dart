@@ -1,33 +1,41 @@
+import 'package:shared_preferences/shared_preferences.dart';
+
 class Settings {
   static Settings _settings;
 
+  static loadSettings() async {
+    var settings = Settings.getInstance();
+    var prefs = await SharedPreferences.getInstance();
+    settings._bridgeAddress = prefs.getString('bridgeAddress') ?? '';
+    settings._whitelist = prefs.getString('whitelist') ?? '';
+    print("Loaded ${settings._bridgeAddress} => ${settings._whitelist}");
+  }
 
   static Settings getInstance() {
     if (_settings == null) {
-      print("Creating new Settings Object");
       _settings = new Settings();
     }
     return _settings;
   }
 
-  String whitelist = "GGpMTyBqayQSIhWu4Uq9H0Shng0WMRexBrZd1hvN";
-  String bridgeAddress = "";
+  String _bridgeAddress;
+  String _whitelist;
 
-
-  getWhiteList() {
-    return whitelist;
-  }
+  String get bridgeAddress => _bridgeAddress;
+  String get whitelist => _whitelist;
+  bool get isInitialized => _bridgeAddress.isNotEmpty && _whitelist.isNotEmpty;
 
   setWhiteList(String whitelist) {
-    this.whitelist = whitelist;
-  }
-
-  getBridgeAddress() {
-    return bridgeAddress;
+    this._whitelist = whitelist;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setString('whitelist', _whitelist);
+    });
   }
 
   setBridgeAddress(String bridgeAddress) {
-    this.bridgeAddress = bridgeAddress;
+    this._bridgeAddress = bridgeAddress;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setString('bridgeAddress', _bridgeAddress);
+    });
   }
-
 }
