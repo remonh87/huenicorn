@@ -2,9 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-abstract class BridgeDiscoveryReceiver {
-  void bridgeDiscovered(String ipAdddress, String port);
-}
+typedef BridgeDiscoveredCallbackType = void Function(String ipAdddress);
 
 class FindBridgesOnNetwork {
   // After start expect callbacks
@@ -14,9 +12,9 @@ class FindBridgesOnNetwork {
   RawDatagramSocket upnpSocket;
 
   List<String> bridgesFoundAtIpAddress = new List<String>();
-  BridgeDiscoveryReceiver foundBridge;
+  BridgeDiscoveredCallbackType foundBridgeCallback;
 
-  FindBridgesOnNetwork(this.foundBridge);
+  FindBridgesOnNetwork(this.foundBridgeCallback);
 
   void startSearch() {
     startNupnpSearch();
@@ -45,7 +43,7 @@ class FindBridgesOnNetwork {
     if (!bridgesFoundAtIpAddress.contains(ipAddress)) {
       bridgesFoundAtIpAddress.add(ipAddress);
       print("Discovered bridge $bridgeId at $ipAddress : $ipPort");
-      foundBridge.bridgeDiscovered(ipAddress, ipPort);
+      foundBridgeCallback(ipAddress);
     }
   }
 
