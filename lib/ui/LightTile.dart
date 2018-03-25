@@ -29,12 +29,7 @@ class LightTile extends StatelessWidget {
         ),
 
         onTap: () {
-          Navigator.push(
-            context,
-            new MaterialPageRoute(
-                builder: (context) => new LightColorPicker(_light, _bridgeState)
-            ),
-          );
+          showDialog(context: context, child: new LightColorPicker(_light, _bridgeState));
         },
         trailing: new Switch(
           value: _light.isOn,

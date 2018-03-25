@@ -31,25 +31,40 @@ class LightPickerState extends State<LightColorPicker> {
   @override
   Widget build(BuildContext context) {
     Color pickerColor = new Color(0xff443a49);
-    return new AlertDialog(
-      title: new Text('Pick a color!'),
-      content: new SingleChildScrollView(
-        child: new ColorPicker(
-          pickerColor: pickerColor,
-          onColorChanged: changeColor,
-          enableLabel: true,
-          pickerAreaHeightPercent: 0.8,
+    return new SimpleDialog(
+      children: <Widget>[
+        new Container(
+          child: new ColorPicker(
+            pickerColor: pickerColor,
+            onColorChanged: changeColor,
+            enableLabel: false,
+            pickerAreaHeightPercent: 1.0,
+          ),
         ),
-      ),
-      actions: <Widget>[
-        new FlatButton(
-          child:
-          new Row(
-              children: [new Text('Set color')]),
-          onPressed: () {
-            updateLight();
-            Navigator.of(context).pop();
-          },
+        new Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            new RaisedButton(
+                color: Colors.indigo,
+                elevation: 5.0,
+                child:
+                new Row(
+                  children: <Widget>[
+                    new Text('Set color',
+                      textScaleFactor: 1.2,
+                      style: new TextStyle(color: Colors.white),
+
+                    ),
+                  ],
+                ),
+
+                onPressed: () {
+                  updateLight();
+                  Navigator.of(context).pop();
+                }
+            ),
+          ],
         ),
       ],
     );
