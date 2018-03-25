@@ -1,22 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:huenicorn/Settings.dart';
-import 'package:huenicorn/network/bridge_client.dart';
+import 'package:huenicorn/network/bridge_discovery.dart';
 import 'package:huenicorn/ui/PushLinkButtonScreen.dart';
 
 class BridgeLoginScreen extends StatefulWidget {
   @override
   State createState() => new BridgeLoginScreenState();
-}
-
-class BridgeUiDiscoveryReceiver implements BridgeDiscoveryReceiver {
-  TextEditingController ipAddressController;
-
-  BridgeUiDiscoveryReceiver(this.ipAddressController);
-
-  void bridgeDiscovered(String ipAdddress, String port) {
-    ipAddressController.text = ipAdddress;
-  }
 }
 
 class BridgeLoginScreenState extends State<BridgeLoginScreen>
@@ -27,7 +17,9 @@ class BridgeLoginScreenState extends State<BridgeLoginScreen>
   void initState() {
     super.initState();
     FindBridgesOnNetwork bridgeFinder =
-        new FindBridgesOnNetwork(new BridgeUiDiscoveryReceiver(_controller));
+        new FindBridgesOnNetwork((String ipAdddress) {
+      _controller.text = ipAdddress;
+    });
     bridgeFinder.startSearch();
   }
 
