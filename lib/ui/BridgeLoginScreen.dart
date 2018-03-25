@@ -4,9 +4,9 @@ import 'package:huenicorn/Settings.dart';
 import 'package:huenicorn/network/bridge_client.dart';
 import 'package:huenicorn/ui/PushLinkButtonScreen.dart';
 
-class IpAddress extends StatefulWidget {
+class BridgeLoginScreen extends StatefulWidget {
   @override
-  State createState() => new LoginPageState();
+  State createState() => new BridgeLoginScreenState();
 }
 
 class BridgeUiDiscoveryReceiver implements BridgeDiscoveryReceiver {
@@ -19,7 +19,7 @@ class BridgeUiDiscoveryReceiver implements BridgeDiscoveryReceiver {
   }
 }
 
-class LoginPageState extends State<IpAddress>
+class BridgeLoginScreenState extends State<BridgeLoginScreen>
     with SingleTickerProviderStateMixin {
   final TextEditingController _controller = new TextEditingController();
 

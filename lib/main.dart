@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:huenicorn/BridgeStateProvider.dart';
 import 'package:huenicorn/Settings.dart';
-import 'package:huenicorn/ui/IpAddress.dart';
+import 'package:huenicorn/ui/BridgeLoginScreen.dart';
 import 'package:huenicorn/ui/LightListView.dart';
 import 'package:huenicorn/ui/loadingScreen.dart';
 
@@ -41,7 +41,7 @@ class _HuenicornHomeState extends State<HuenicornHome> {
         onPressed: () {
           Navigator.push(
             context,
-            new MaterialPageRoute(builder: (context) => new IpAddress()),
+            new MaterialPageRoute(builder: (context) => new BridgeLoginScreen()),
           );
         },
         child: new ImageIcon(new AssetImage("assets/devices_bridges.png"),

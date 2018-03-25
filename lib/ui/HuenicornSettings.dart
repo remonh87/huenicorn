@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:huenicorn/CardSetting.dart';
-import 'package:huenicorn/ui/IpAddress.dart';
+import 'package:huenicorn/ui/BridgeLoginScreen.dart';
 
 class HuenicornSettings extends StatefulWidget {
   HuenicornSettings({Key key}) : super(key: key);
@@ -41,7 +41,7 @@ class HuenicornSettingsState extends State<HuenicornSettings> {
                   Navigator.push(
                     context,
                     new MaterialPageRoute(
-                        builder: (context) => new IpAddress()),
+                        builder: (context) => new BridgeLoginScreen()),
                   );
                 }, child: new CardSetting(
                   icon: new ImageIcon(
