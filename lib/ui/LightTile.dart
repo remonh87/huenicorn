@@ -8,24 +8,24 @@ class LightTile extends StatelessWidget {
 
   final BridgeState _bridgeState;
   final Light _light;
-  final Color _color;
 
-  LightTile(this._bridgeState, this._light, this._color);
+  LightTile(this._bridgeState, this._light);
 
   @override
   Widget build(BuildContext context) {
+    final hsvColor = new HSVColor.fromAHSV(1.0, _light.hue, _light.saturation, 1.0);
     return new ListTile(
         enabled: true,
         leading:
         new CircleAvatar(
-            backgroundColor: _color,
+            backgroundColor: Colors.grey[850],
             child: new ImageIcon(
-                new AssetImage("assets/bulbs_black.png"), color: Colors.white,
+                new AssetImage("assets/bulbs_black.png"), color: hsvColor.toColor(),
                 size: 30.0),
         ),
         title: new Text(_light.name,
           textScaleFactor: 1.2,
-          style: new TextStyle(color: _color),
+          style: new TextStyle(color: hsvColor.toColor()),
         ),
 
         onTap: () {
@@ -33,7 +33,7 @@ class LightTile extends StatelessWidget {
         },
         trailing: new Switch(
           value: _light.isOn,
-          activeColor: _color,
+          activeColor: hsvColor.toColor(),
           onChanged: (bool newValue) {
             _light.isOn = newValue;
             _bridgeState.setLight(_light);
