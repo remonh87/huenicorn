@@ -15,7 +15,6 @@ class LightRowView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hsvColor = new HSVColor.fromAHSV(1.0, _light.hue, _light.saturation, 1.0);
     return new Padding(
       padding: const EdgeInsets.only(
           left: 15.0, right: 15.0, top: 1.0, bottom: 1.0),
@@ -24,7 +23,7 @@ class LightRowView extends StatelessWidget {
         color: Colors.grey[800],
         child: new Column(
           children: <Widget>[
-            new LightTile(_bridgeState, _light, hsvColor.toColor()),
+            new LightTile(_bridgeState, _light),
             new Row(
               children: <Widget>[
                 new Expanded(
