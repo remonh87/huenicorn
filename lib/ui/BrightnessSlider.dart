@@ -23,11 +23,11 @@ class _BrightnessSliderState extends State<BrightnessSlider> {
 
   @override
   Widget build(BuildContext context) {
-    return new CupertinoSlider(
+    return new Slider(
       value: _light.brightness,
       min: 0.0,
       max: 1.0,
-      activeColor: Colors.grey,
+      activeColor: Colors.white,
       divisions: 255,
       onChanged: applyLater
     );

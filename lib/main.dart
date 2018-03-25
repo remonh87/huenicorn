@@ -41,24 +41,23 @@ class _HuenicornHomeState extends State<HuenicornHome> {
     return new Scaffold(
       appBar: new AppBar(
         backgroundColor: Colors.grey[850],
-        leading: new IconButton(
-          icon: new ImageIcon(
-            new AssetImage("assets/devices_bridges.png"),
-              size: 30.0, color: Colors.white),
-          onPressed: () {
-            Navigator.push(
-              context,
-              new MaterialPageRoute(
-                  builder: (context) => new IpAddress()),
-            );
-          },
-        ),
-        title: new Text('Home'),
+        title: new Text('Lights overview'),
       ),
       body: new Container(
         color: Colors.grey[900],
         child: new LightListView(_bridgeStateProvider.bridgeState)
-      )
+      ),
+      floatingActionButton: new FloatingActionButton(onPressed: () {
+        Navigator.push(
+          context,
+          new MaterialPageRoute(
+              builder: (context) => new IpAddress()),
+        );
+      },
+        child: new ImageIcon(
+            new AssetImage("assets/devices_bridges.png"),
+            size: 30.0, color: Colors.white),
+      ),
     );
   }
 }
