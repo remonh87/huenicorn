@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:huenicorn/CardSetting.dart';
-import 'package:huenicorn/ui/BridgeLoginScreen.dart';
 
 class HuenicornSettings extends StatefulWidget {
   HuenicornSettings({Key key}) : super(key: key);
@@ -37,7 +36,7 @@ class HuenicornSettingsState extends State<HuenicornSettings> {
             children: <Widget>[
               new GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pushReplacementNamed('/BridgeLoginScreen');
+                  Navigator.of(context).pushNamed('/BridgeLoginScreen');
                 }, child: new CardSetting(
                   icon: new ImageIcon(
                       new AssetImage("assets/devices_bridges.png"),

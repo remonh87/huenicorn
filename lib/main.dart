@@ -37,6 +37,7 @@ class _HuenicornHomeState extends State<HuenicornHome> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.grey[850],
         title: new Text('Lights overview'),
       ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:huenicorn/Settings.dart';
-import 'package:huenicorn/main.dart';
 import 'package:huenicorn/network/bridge_connect_activity.dart';
 
 class PushLinkButtonScreen extends StatefulWidget {

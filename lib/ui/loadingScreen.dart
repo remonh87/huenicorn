@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:huenicorn/Settings.dart';
-import 'package:huenicorn/main.dart';
-import 'package:huenicorn/ui/BridgeLoginScreen.dart';
 
 class LoadingScreen extends StatelessWidget {
   @override
