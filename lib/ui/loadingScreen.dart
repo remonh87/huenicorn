@@ -18,7 +18,7 @@ class LoadingScreen extends StatelessWidget {
               inputDecorationTheme: new InputDecorationTheme(
                 hintStyle: new TextStyle(color: Colors.white, fontSize: 20.0),
                 labelStyle:
-                    new TextStyle(color: Colors.grey[600], fontSize: 25.0),
+                new TextStyle(color: Colors.grey[600], fontSize: 25.0),
               )),
           isMaterialAppTheme: true,
           child: new Column(
@@ -31,13 +31,19 @@ class LoadingScreen extends StatelessWidget {
   }
 
   Widget _huenicornLogo(BuildContext context) {
-    return new Text('huenicorn',
-        textAlign: TextAlign.center,
-        overflow: TextOverflow.ellipsis,
-        style: DefaultTextStyle.of(context).style.apply(
-            fontSizeFactor: 1.0,
-            color: Colors.purpleAccent,
-            decoration: TextDecoration.none));
+    return
+    new Padding(padding: const EdgeInsets.only(left:5.0, right: 5.0), child:
+      new Column(
+        children: <Widget>[
+          new Image(
+            image: new AssetImage('assets/huenicorn_logo.png'),
+          ),
+          new Image(
+              image: new AssetImage('assets/unicorn.png')
+          ),
+        ],
+      ),
+      );
   }
 
   _startLoadingSettings(BuildContext context) async {
@@ -49,7 +55,9 @@ class LoadingScreen extends StatelessWidget {
   }
 
   _getHome(BuildContext context) {
-    return Settings.getInstance().isInitialized
+    return Settings
+        .getInstance()
+        .isInitialized
         ? new HuenicornHome()
         : new IpAddress();
   }
