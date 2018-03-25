@@ -21,11 +21,10 @@ class LightRowView extends StatelessWidget {
           left: 15.0, right: 15.0, top: 1.0, bottom: 1.0),
 
       child: new Card(
-        elevation: 10.0,
-        color: hsvColor.toColor(),
+        color: Colors.grey[800],
         child: new Column(
           children: <Widget>[
-            new LightTile(_bridgeState, _light),
+            new LightTile(_bridgeState, _light, hsvColor.toColor()),
             new Row(
               children: <Widget>[
                 new Expanded(
