@@ -14,8 +14,7 @@ class PushLinkButtonScreenState extends State<PushLinkButtonScreen> {
   @override
   Widget build(BuildContext context) {
     _bridgeConnectActivity = new BridgeConnectActivity(() {
-      Navigator.of(context).pushReplacement(new MaterialPageRoute(
-          builder: (BuildContext context) => new HuenicornHome()));
+      Navigator.of(context).pushReplacementNamed('/HuenicornHome');
     });
     return new Scaffold(
       backgroundColor: Colors.grey[900],

@@ -68,16 +68,17 @@ class BridgeLoginScreenState extends State<BridgeLoginScreen>
   AppBar _createAppBar(BuildContext context) {
     return new AppBar(
       backgroundColor: Colors.grey[850],
-      leading: new IconButton(
-        icon: new Icon(Icons.arrow_back),
-        onPressed: () {
-          if (Settings.getInstance().isInitialized) {
-            Navigator.pop(context);
-          } else {
-            _showEnterIpDialog();
-          }
-        },
-      ),
+
+//      leading: new IconButton(
+//        icon: new Icon(Icons.arrow_back),
+//        onPressed: () {
+//          if (Settings.getInstance().isInitialized) {
+//            Navigator.pop(context);
+//          } else {
+//            _showEnterIpDialog();
+//          }
+//        },
+//      ),
       title: new Text('Connect to Bridge'),
     );
   }
@@ -104,10 +105,7 @@ class BridgeLoginScreenState extends State<BridgeLoginScreen>
           _showEnterIpDialog();
         } else {
           Settings.getInstance().setBridgeAddress(_controller.text);
-          Navigator.push(
-              context,
-              new MaterialPageRoute(
-                  builder: (context) => new PushLinkButtonScreen()));
+          Navigator.of(context).pushNamed('/PushLinkButtonScreen');
         }
       },
     );

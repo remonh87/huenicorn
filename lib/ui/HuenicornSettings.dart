@@ -37,12 +37,7 @@ class HuenicornSettingsState extends State<HuenicornSettings> {
             children: <Widget>[
               new GestureDetector(
                 onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    new MaterialPageRoute(
-                        builder: (context) => new BridgeLoginScreen()),
-                  );
+                  Navigator.of(context).pushReplacementNamed('/BridgeLoginScreen');
                 }, child: new CardSetting(
                   icon: new ImageIcon(
                       new AssetImage("assets/devices_bridges.png"),
