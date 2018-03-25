@@ -9,7 +9,8 @@ dependencies:
   cupertino_icons: ^0.1.0
   color: ^2.0.2
   font_awesome_flutter: 6.0.0
-  flutter_colorpicker: "^0.0.4"
+  flutter_colorpicker: ^0.0.4
+  shared_preferences: ^0.4.0
 
 
 
