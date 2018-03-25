@@ -40,6 +40,8 @@ flutter:
     - assets/devices_bridges.png
     - assets/uicontrols_scenes.png
     - assets/bridge_and_router.webp
+    - assets/huenicorn_logo.png
+    - assets/unicorn.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
