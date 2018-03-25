@@ -108,7 +108,7 @@ class BridgeLoginScreenState extends State<BridgeLoginScreen>
       textColor: Colors.white,
       child: new Icon(FontAwesomeIcons.check),
       onPressed: () {
-        if (_controller.text.trim() == "") {
+        if (_controller.text.trim().isEmpty) {
           _showEnterIpDialog();
         } else {
           Settings.getInstance().setBridgeAddress(_controller.text);

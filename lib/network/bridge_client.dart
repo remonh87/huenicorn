@@ -131,7 +131,7 @@ class FindBridgesOnNetwork {
     }
 
     if (foundIpBridge && (foundIpAddress != null)) {
-      bridgeDiscovered (foundIpAddress, foundBridgeId);
+      bridgeDiscovered(foundIpAddress, foundBridgeId);
     }
   }
 
@@ -149,6 +149,7 @@ class FindBridgesOnNetwork {
         socket.broadcastEnabled = true;
         socket.multicastHops = 1; // set TimeToLive
         socket.multicastLoopback = false; // don't receive my own message
+        socket.joinMulticast(upnpIpAddress);
         int count = socket.send(mSearchBytes, upnpIpAddress, upnpPort);
         print ("Searching for bridge $count bytes send");
     });
@@ -157,16 +158,18 @@ class FindBridgesOnNetwork {
   void startUpnpSearch ()  {
     // Bind UDP socket to UPnP multicast group, after 1 second
     // send UPnP search message and process responses.
-    RawDatagramSocket.bind(InternetAddress.ANY_IP_V4, upnpPort)
+    RawDatagramSocket.bind(InternetAddress.ANY_IP_V4, 0)
         .then((RawDatagramSocket socket) {
       upnpSocket = socket;
+      socket.broadcastEnabled = true;
+      socket.multicastHops = 50;
       // iOS throws an exception on join multi-cast, don't know why
       // but without a join we won't receive any UPnP message :-(
       socket.joinMulticast(upnpIpAddress);
       socket.listen((RawSocketEvent ev){
         if(ev == RawSocketEvent.READ) {
-          String reply = (new AsciiDecoder()).convert(socket.receive().data);
-          _handleUpnpMessage (reply);
+          String reply = UTF8.decode(socket.receive().data);
+          _handleUpnpMessage(reply);
         }
       });
       new Timer(new Duration(seconds: 1), _sendMSearchMessage);
@@ -176,7 +179,7 @@ class FindBridgesOnNetwork {
   void stopUpnpSearch () { // not tested yet
     // stop only once
     if (upnpSocket != null) {
-      // upnpSocket.leaveMulticast(upnpIpAddress);
+      upnpSocket.leaveMulticast(upnpIpAddress);
       upnpSocket.close();
       upnpSocket = null;
     }
