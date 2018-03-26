@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:huenicorn/Settings.dart';
 import 'package:huenicorn/network/bridge_discovery.dart';
-import 'package:huenicorn/ui/PushLinkButtonScreen.dart';
 
 class BridgeLoginScreen extends StatefulWidget {
   @override
@@ -68,16 +67,6 @@ class BridgeLoginScreenState extends State<BridgeLoginScreen>
   AppBar _createAppBar(BuildContext context) {
     return new AppBar(
       backgroundColor: Colors.grey[850],
-      leading: new IconButton(
-        icon: new Icon(Icons.arrow_back),
-        onPressed: () {
-          if (Settings.getInstance().isInitialized) {
-            Navigator.pop(context);
-          } else {
-            _showEnterIpDialog();
-          }
-        },
-      ),
       title: new Text('Connect to Bridge'),
     );
   }
@@ -104,10 +93,7 @@ class BridgeLoginScreenState extends State<BridgeLoginScreen>
           _showEnterIpDialog();
         } else {
           Settings.getInstance().setBridgeAddress(_controller.text);
-          Navigator.push(
-              context,
-              new MaterialPageRoute(
-                  builder: (context) => new PushLinkButtonScreen()));
+          Navigator.of(context).pushNamed('/PushLinkButtonScreen');
         }
       },
     );

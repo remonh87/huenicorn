@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:huenicorn/Settings.dart';
-import 'package:huenicorn/main.dart';
-import 'package:huenicorn/ui/BridgeLoginScreen.dart';
 
 class LoadingScreen extends StatelessWidget {
   @override
@@ -49,8 +47,7 @@ class LoadingScreen extends StatelessWidget {
   _startLoadingSettings(BuildContext context) async {
     new Timer(const Duration(seconds: 2), () async {
       await Settings.loadSettings();
-      Navigator.of(context).pushReplacement(new MaterialPageRoute(
-          builder: (BuildContext context) => _getHome(context)));
+      Navigator.of(context).pushReplacementNamed(_getHome(context));
     });
   }
 
@@ -58,7 +55,7 @@ class LoadingScreen extends StatelessWidget {
     return Settings
         .getInstance()
         .isInitialized
-        ? new HuenicornHome()
-        : new BridgeLoginScreen();
+        ? '/HuenicornHome'
+        : '/BridgeLoginScreen';
   }
 }
