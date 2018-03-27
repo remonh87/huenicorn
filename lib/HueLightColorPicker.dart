@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:huenicorn/ui/HuenicornAppBar.dart';
 
 class HueLightColorPicker extends StatefulWidget {
 
@@ -17,11 +18,7 @@ class LightPickerState extends State<HueLightColorPicker> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: new Text("Color Picker"),
-      ),
+      appBar: new HuenicornAppBar('Color Picker'),
       body: new Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.

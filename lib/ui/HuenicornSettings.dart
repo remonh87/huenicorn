@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:huenicorn/CardSetting.dart';
+import 'package:huenicorn/ui/HuenicornAppBar.dart';
 
 class HuenicornSettings extends StatefulWidget {
   HuenicornSettings({Key key}) : super(key: key);
@@ -17,16 +18,7 @@ class HuenicornSettingsState extends State<HuenicornSettings> {
         color: Colors.white);
 
     return new Scaffold(
-      appBar: new AppBar(
-        backgroundColor: Colors.grey[850],
-        leading: new IconButton(
-          icon: new Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        title: new Text('Settings'),
-      ),
+      appBar: new HuenicornAppBar('Settings'),
       body: new Container(
         color: Colors.grey[900],
         padding: const EdgeInsets.only(top: 2.0, left: 10.0, right: 10.0),

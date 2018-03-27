@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:huenicorn/Settings.dart';
 import 'package:huenicorn/network/bridge_discovery.dart';
+import 'package:huenicorn/ui/HuenicornAppBar.dart';
 
 class BridgeLoginScreen extends StatefulWidget {
   @override
@@ -26,7 +27,7 @@ class BridgeLoginScreenState extends State<BridgeLoginScreen>
   Widget build(BuildContext context) {
     return new Scaffold(
       backgroundColor: Colors.grey[900],
-      appBar: _createAppBar(context),
+      appBar: new HuenicornAppBar('Connect to Bridge'),
       body: new Stack(fit: StackFit.expand, children: <Widget>[
         new Theme(
           data: new ThemeData(
@@ -61,13 +62,6 @@ class BridgeLoginScreenState extends State<BridgeLoginScreen>
           ),
         ),
       ]),
-    );
-  }
-
-  AppBar _createAppBar(BuildContext context) {
-    return new AppBar(
-      backgroundColor: Colors.grey[850],
-      title: new Text('Connect to Bridge'),
     );
   }
 

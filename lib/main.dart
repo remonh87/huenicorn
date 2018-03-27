@@ -5,6 +5,7 @@ import 'package:huenicorn/ui/BridgeLoginScreen.dart';
 import 'package:huenicorn/ui/LightListView.dart';
 import 'package:huenicorn/ui/loadingScreen.dart';
 import 'package:huenicorn/ui/PushLinkButtonScreen.dart';
+import 'package:huenicorn/ui/HuenicornAppBar.dart';
 
 void main() => runApp(new MyApp());
 
@@ -36,11 +37,7 @@ class _HuenicornHomeState extends State<HuenicornHome> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.grey[850],
-        title: new Text('Lights overview'),
-      ),
+      appBar: new HuenicornAppBar('Lights overview'),
       body: new Container(
           color: Colors.grey[900],
           child: new LightListView(_bridgeStateProvider.bridgeState)),
@@ -53,4 +50,6 @@ class _HuenicornHomeState extends State<HuenicornHome> {
       ),
     );
   }
+
+
 }
