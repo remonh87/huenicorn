@@ -12,14 +12,29 @@ class BridgeLoginScreenState extends State<BridgeLoginScreen>
     with SingleTickerProviderStateMixin {
   final TextEditingController _controller = new TextEditingController();
 
+  FindBridgesOnNetwork bridgeFinder;
+
   @override
   void initState() {
     super.initState();
-    FindBridgesOnNetwork bridgeFinder =
-        new FindBridgesOnNetwork((String ipAdddress) {
-      _controller.text = ipAdddress;
+    bridgeFinder = new FindBridgesOnNetwork((String ipAdddress) {
+      // asynchoneous callback, only process if we're still searching
+      if (bridgeFinder != null) {
+        _controller.text = ipAdddress;
+      }
     });
     bridgeFinder.startSearch();
+  }
+
+//  @protected
+//  @mustCallSuper
+  void deactivate() {
+    super.deactivate();
+    // testing indicates deactivate can be called twice, don't stop twice
+    if (bridgeFinder != null) {
+      bridgeFinder.stopSearch();
+    }
+    bridgeFinder = null;
   }
 
   @override
