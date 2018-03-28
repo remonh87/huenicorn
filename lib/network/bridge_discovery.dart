@@ -129,9 +129,12 @@ class FindBridgesOnNetwork {
       upnpSocket = socket;
 //      socket.broadcastEnabled = true; - receive socket, no need to specify send option
 //      socket.multicastHops = 50; - receive socket, no need to specify send option
-      // iOS throws an exception on join multi-cast, don't know why
-      // but without a join we won't receive any UPnP message :-(
-      socket.joinMulticast(upnpIpAddress);
+      try {
+        socket.joinMulticast(upnpIpAddress);
+      } catch (e) {
+        // iOS throws an exception on join multi-cast, don't know why
+        // but without a join we won't receive any UPnP message :-(
+      }
       socket.listen((RawSocketEvent ev) {
         if (ev == RawSocketEvent.READ) {
           String reply = UTF8.decode(socket.receive().data);
@@ -146,7 +149,12 @@ class FindBridgesOnNetwork {
     // not tested yet
     // stop only once
     if (upnpSocket != null) {
-      upnpSocket.leaveMulticast(upnpIpAddress);
+      try {
+        upnpSocket.leaveMulticast(upnpIpAddress);
+      } catch (e) {
+        // exception thrown on iOS
+        // probably because join fails as well
+      }
       upnpSocket.close();
       upnpSocket = null;
     }
