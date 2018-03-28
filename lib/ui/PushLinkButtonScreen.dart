@@ -8,16 +8,16 @@ class PushLinkButtonScreen extends StatefulWidget {
 }
 
 class PushLinkButtonScreenState extends State<PushLinkButtonScreen> {
-  BridgeConnectActivity _bridgeConnectActivity;
 
   @override
   Widget build(BuildContext context) {
-    _bridgeConnectActivity = new BridgeConnectActivity(() {
+    new BridgeConnectActivity(() {
       Navigator.of(context).pushReplacementNamed('/HuenicornHome');
     });
+
     return new Scaffold(
       backgroundColor: Colors.grey[900],
-      appBar: new HuenicornAppBar(context, 'Connecting to Bridge', []),
+      appBar: createAppBar('Connecting to Bridge', []),
       body: new Stack(fit: StackFit.expand, children: <Widget>[
         new Theme(
           data: new ThemeData(

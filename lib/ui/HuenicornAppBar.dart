@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
-class HuenicornAppBar extends AppBar {
-
-  HuenicornAppBar(BuildContext context, String title, List <Widget> appBarActions) : super(
-    title: new Text(title),
-    backgroundColor: Colors.grey[850],
-    actions: appBarActions
+AppBar createAppBar(String title, List <Widget> appBarActions) {
+  return new AppBar(
+      title: new Text(title),
+      backgroundColor: Colors.grey[850],
+      actions: appBarActions
   );
 }
