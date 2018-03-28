@@ -23,14 +23,28 @@ class _BrightnessSliderState extends State<BrightnessSlider> {
 
   @override
   Widget build(BuildContext context) {
-    return new Slider(
-      value: _light.brightness,
-      min: 0.0,
-      max: 1.0,
-      activeColor: Colors.white,
-      divisions: 255,
-      onChanged: applyLater
-    );
+    Widget _slider;
+
+    if (_light.isOn) {
+      _slider = new Slider(
+          value: _light.brightness,
+          min: 0.0,
+          max: 1.0,
+          activeColor: Colors.white,
+          onChanged: applyLater
+      );
+    }
+    else {
+      _slider = new Slider(
+          value: _light.brightness,
+          min: 0.0,
+          max: 1.0,
+          inactiveColor: Colors.grey[400],
+          onChanged: null
+      );
+    }
+
+    return _slider;
   }
 
   var lastRequest = 0;
