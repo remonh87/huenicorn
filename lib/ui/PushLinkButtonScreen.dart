@@ -17,7 +17,7 @@ class PushLinkButtonScreenState extends State<PushLinkButtonScreen> {
     });
     return new Scaffold(
       backgroundColor: Colors.grey[900],
-      appBar: new HuenicornAppBar('Connecting to Bridge'),
+      appBar: new HuenicornAppBar(context, 'Connecting to Bridge', []),
       body: new Stack(fit: StackFit.expand, children: <Widget>[
         new Theme(
           data: new ThemeData(

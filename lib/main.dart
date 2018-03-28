@@ -36,8 +36,10 @@ class _HuenicornHomeState extends State<HuenicornHome> {
 
   @override
   Widget build(BuildContext context) {
+    List <Widget> appBarActions = _createAppBarActionList();
+
     return new Scaffold(
-      appBar: new HuenicornAppBar('Lights overview'),
+      appBar: new HuenicornAppBar(context, 'Lights overview', appBarActions),
       body: new Container(
           color: Colors.grey[900],
           child: new LightListView(_bridgeStateProvider.bridgeState)),
@@ -51,5 +53,16 @@ class _HuenicornHomeState extends State<HuenicornHome> {
     );
   }
 
+  List <Widget> _createAppBarActionList() {
+    List <Widget> appBarActions= <Widget> [
+      new IconButton( // action button
+      icon: new ImageIcon(new AssetImage("assets/devices_bridges.png")),
+      onPressed: () {
+        Navigator.of(context).pushNamed('/BridgeLoginScreen');
+      },
+      )
+    ];
 
+    return appBarActions;
+  }
 }
