@@ -41,10 +41,13 @@ class _LightListViewState extends State<LightListView> {
     return new ListView.builder(
         itemCount: _lights.length,
         itemBuilder: (BuildContext context, int index) {
-          final light = _lights[index];
+          final _light = _lights[index];
           return new Padding(padding: const EdgeInsets.only(
               top: 5.0),
-              child: new LightRowView(_bridgeState, light)
+              child: new LightRowView(
+                  bridgeState: _bridgeState,
+                  light: _light
+              )
           );
         }
     );
