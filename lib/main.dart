@@ -39,7 +39,7 @@ class _HuenicornHomeState extends State<HuenicornHome> {
     List <Widget> appBarActions = _createAppBarActionList();
 
     return new Scaffold(
-      appBar: createAppBar('Lights overview', appBarActions),
+      appBar: createHuenicornAppBar('Lights overview', appBarActions),
       body: new Container(
         color: Colors.grey[900],
         child: new LightListView(_bridgeStateProvider.bridgeState)
