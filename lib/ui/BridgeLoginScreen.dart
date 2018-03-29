@@ -42,7 +42,7 @@ class BridgeLoginScreenState extends State<BridgeLoginScreen>
   Widget build(BuildContext context) {
     return new Scaffold(
       backgroundColor: Colors.grey[900],
-      appBar: createAppBar('Connect to Bridge', []),
+      appBar: createHuenicornAppBar('Connect to Bridge', []),
       body: new Stack(fit: StackFit.expand, children: <Widget>[
         new Theme(
           data: new ThemeData(
