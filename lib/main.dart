@@ -5,6 +5,7 @@ import 'package:huenicorn/ui/BridgeLoginScreen.dart';
 import 'package:huenicorn/ui/LightListView.dart';
 import 'package:huenicorn/ui/loadingScreen.dart';
 import 'package:huenicorn/ui/PushLinkButtonScreen.dart';
+import 'package:huenicorn/ui/HuenicornAppBar.dart';
 
 void main() => runApp(new MyApp());
 
@@ -35,22 +36,27 @@ class _HuenicornHomeState extends State<HuenicornHome> {
 
   @override
   Widget build(BuildContext context) {
+    List <Widget> appBarActions = _createAppBarActionList();
+
     return new Scaffold(
-      appBar: new AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.grey[850],
-        title: new Text('Lights overview'),
-      ),
+      appBar: createHuenicornAppBar('Lights overview', appBarActions),
       body: new Container(
-          color: Colors.grey[900],
-          child: new LightListView(_bridgeStateProvider.bridgeState)),
-      floatingActionButton: new FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).pushNamed('/BridgeLoginScreen');
-        },
-        child: new ImageIcon(new AssetImage("assets/devices_bridges.png"),
-            size: 30.0, color: Colors.white),
+        color: Colors.grey[900],
+        child: new LightListView(_bridgeStateProvider.bridgeState)
       ),
     );
+  }
+
+  List <Widget> _createAppBarActionList() {
+    List <Widget> appBarActions= <Widget> [
+      new IconButton( // action button
+      icon: new ImageIcon(new AssetImage("assets/devices_bridges.png")),
+      onPressed: () {
+        Navigator.of(context).pushNamed('/BridgeLoginScreen');
+      },
+      )
+    ];
+
+    return appBarActions;
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:huenicorn/Settings.dart';
 import 'package:huenicorn/network/bridge_connect_activity.dart';
+import 'package:huenicorn/ui/HuenicornAppBar.dart';
 
 class PushLinkButtonScreen extends StatefulWidget {
   @override
@@ -8,16 +8,16 @@ class PushLinkButtonScreen extends StatefulWidget {
 }
 
 class PushLinkButtonScreenState extends State<PushLinkButtonScreen> {
-  BridgeConnectActivity _bridgeConnectActivity;
 
   @override
   Widget build(BuildContext context) {
-    _bridgeConnectActivity = new BridgeConnectActivity(() {
+    new BridgeConnectActivity(() {
       Navigator.of(context).pushReplacementNamed('/HuenicornHome');
     });
+
     return new Scaffold(
       backgroundColor: Colors.grey[900],
-      appBar: _appBar(context),
+      appBar: createHuenicornAppBar('Connecting to Bridge', []),
       body: new Stack(fit: StackFit.expand, children: <Widget>[
         new Theme(
           data: new ThemeData(
@@ -40,20 +40,6 @@ class PushLinkButtonScreenState extends State<PushLinkButtonScreen> {
           ),
         ),
       ]),
-    );
-  }
-
-  AppBar _appBar(BuildContext context) {
-    return new AppBar(
-      backgroundColor: Colors.grey[850],
-      leading: new IconButton(
-          icon: new Icon(Icons.arrow_back),
-          onPressed: () {
-            _bridgeConnectActivity.stop();
-            Settings.getInstance().setBridgeAddress("");
-            Navigator.pop(context);
-          }),
-      title: new Text('Connecting to Bridge'),
     );
   }
 
