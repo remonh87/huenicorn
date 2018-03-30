@@ -27,10 +27,10 @@ class BridgeConnectActivity {
     var url = 'http://' + bridgeAddress + '/api/';
     var httpClient = new HttpClient();
     httpClient.postUrl(Uri.parse(url)).then((request) {
-      request.write(JSON.encode({"devicetype": "huenicorn"}));
+      request.write(json.encode({"devicetype": "huenicorn"}));
       request.close().then((response) {
-        response.transform(UTF8.decoder).join().then((responseData) {
-          var r = JSON.decode(responseData);
+        response.transform(utf8.decoder).join().then((responseData) {
+          var r = json.decode(responseData);
           bool connected = r[0].containsKey("success");
           if (connected) {
             Settings.getInstance().setWhiteList(r[0]["success"]["username"]);

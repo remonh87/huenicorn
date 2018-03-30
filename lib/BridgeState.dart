@@ -5,9 +5,9 @@ import 'package:huenicorn/network/bridge_client.dart';
 class BridgeState extends Object with ChangeNotifier {
 
   final BridgeClient _bridgeClient;
-  List<Light> _lights;
+  List _lights;
 
-  List<Light> get lights => _lights;
+  List get lights => _lights;
 
   BridgeState(this._bridgeClient);
 
