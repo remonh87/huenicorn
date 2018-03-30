@@ -119,7 +119,7 @@ class BridgeLoginScreenState extends State<BridgeLoginScreen>
   void _showEnterIpDialog() {
     showDialog(
         context: context,
-        builder: (BuildContext context) => new AlertDialog(
+        child: new AlertDialog(
           title: new Text('Please type IP Address'),
         ));
   }

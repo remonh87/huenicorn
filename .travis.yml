@@ -25,7 +25,7 @@ before_install:
   - export PATH=/usr/lib/dart/bin:$PATH
 script:
   - flutter test
-  - dartanalyzer --fatal-warnings .
+  - dartanalyzer --fatal-warnings --fatal-infos .
 cache:
   directories:
     - $HOME/.pub-cache
