@@ -17,10 +17,12 @@ class LightRowView extends StatefulWidget {
 
 class _LightRowViewState extends State <LightRowView> {
   static HSVColor _hsvColor;
+  static double _sliderValue;
 
   @override
   Widget build(BuildContext context) {
     _hsvColor = new HSVColor.fromAHSV(1.0, widget.light.hue, widget.light.saturation, 1.0);
+    _sliderValue = widget.light.brightness;
     return new Padding(
       padding: const EdgeInsets.only(
           left: 15.0, right: 15.0, top: 1.0, bottom: 1.0),
@@ -110,7 +112,7 @@ class _LightRowViewState extends State <LightRowView> {
 
     if (widget.light.isOn) {
       _slider = new Slider(
-          value: widget.light.brightness,
+          value: _sliderValue,
           min: 0.0,
           max: 1.0,
           activeColor: _hsvColor.toColor(),
@@ -119,7 +121,7 @@ class _LightRowViewState extends State <LightRowView> {
     }
     else {
       _slider = new Slider(
-          value: widget.light.brightness,
+          value: _sliderValue,
           min: 0.0,
           max: 1.0,
           inactiveColor: Colors.grey[400],
@@ -130,13 +132,18 @@ class _LightRowViewState extends State <LightRowView> {
     return _slider;
   }
 
-  var lastRequest = 0;
+  int lastRequest = 0;
   applyLater(double newValue) {
-    widget.light.brightness = newValue;
     var sinceEpoch = new DateTime.now().millisecondsSinceEpoch;
-    if(sinceEpoch - lastRequest > 200) {
-      lastRequest = sinceEpoch;
-      widget.bridgeState.setLight(widget.light);
-    }
+
+    setState(() {
+      _sliderValue = newValue;
+      widget.light.brightness = newValue;
+
+      if((sinceEpoch - lastRequest) > 500) {
+        lastRequest = sinceEpoch;
+        widget.bridgeState.setLight(widget.light);
+      }
+    });
   }
 }
