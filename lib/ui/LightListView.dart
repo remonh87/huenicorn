@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:huenicorn/BridgeState.dart';
 import 'package:huenicorn/ui/LightRowView.dart';
-import 'package:huenicorn/hue/light.dart';
 
 class LightListView extends StatefulWidget {
 
@@ -17,7 +16,7 @@ class _LightListViewState extends State<LightListView> {
 
   final BridgeState _bridgeState;
 
-  List<Light> _lights = [];
+  List _lights = [];
 
   _LightListViewState(this._bridgeState) {
     _bridgeState.addListener(_applyBridgeState);

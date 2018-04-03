@@ -137,7 +137,7 @@ class FindBridgesOnNetwork {
       }
       socket.listen((RawSocketEvent ev) {
         if (ev == RawSocketEvent.READ) {
-          String reply = UTF8.decode(socket.receive().data);
+          String reply = utf8.decode(socket.receive().data);
           _handleUpnpMessage(reply);
         }
       });
@@ -166,8 +166,8 @@ class FindBridgesOnNetwork {
       var httpClient = new HttpClient();
       var request = await httpClient.getUrl(Uri.parse(nupnpUrl));
       var response = await request.close();
-      var jsonString = await response.transform(UTF8.decoder).join();
-      var jsonArray = JSON.decode(jsonString);
+      var jsonString = await response.transform(utf8.decoder).join();
+      var jsonArray = json.decode(jsonString);
       // example answer of bridges seen by Hue portal on this IP address:
       // []
       // [{"id":"001788fffe10377a","internalipaddress":"192.168.0.18"}]

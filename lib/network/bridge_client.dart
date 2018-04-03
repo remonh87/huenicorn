@@ -13,12 +13,12 @@ class BridgeClient {
 
   BridgeClient(this.bridgeAddress, [this.token = '0']);
 
-  Future<List<Light>> getLights() async {
+  Future<List> getLights() async {
     var url = 'http://' + bridgeAddress + '/api/' + token + '/lights';
     var httpClient = new HttpClient();
     var request = await httpClient.getUrl(Uri.parse(url));
     var response = await request.close();
-    var json = await response.transform(UTF8.decoder).join();
+    var json = await response.transform(utf8.decoder).join();
     return (new LightDeserializer()).createLights(json);
   }
 
@@ -36,6 +36,6 @@ class BridgeClient {
       'sat': (light.saturation * 255).round(),
       'bri': (light.brightness * 255).round(),
     };
-    await http.put(url, body: JSON.encode(body));
+    await http.put(url, body: json.encode(body));
   }
 }
